@@ -1,3 +1,8 @@
+# NOTE: GitHub Pages ignores this file entirely — it serves no custom
+# headers at all. It applies on Cloudflare Pages and Netlify. While the site
+# is on GitHub Pages the frame protection lives in a script at the top of
+# index.html instead, which is weaker than the header below.
+
 /*
   # The page never takes user input into the DOM and loads nothing it does not
   # name, so these cost nothing and close the easy holes.
