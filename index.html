@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BELLR — liquidity that knows the market closed</title>
+<meta name="description" content="Uniswap v4 hooks for stock-paired pools on Robinhood Chain. When the bell rings, the pool changes its own rules.">
+<meta name="theme-color" content="#F2EDE1">
+<link rel="canonical" href="https://helps-dev.github.io/bellr/">
+<link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
+
+<!-- URLs below must be absolute and must resolve, or a shared link shows no
+     card at all. They point at the GitHub Pages origin until bellr.fun is
+     bought and pointed here; then change these four and CNAME.
+     Shared links are how a protocol like this is found at all, so the card is
+     part of the product rather than an afterthought. Absolute URLs: every
+     scraper resolves these against nothing. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="BELLR">
+<meta property="og:url" content="https://helps-dev.github.io/bellr/">
+<meta property="og:title" content="Your pool doesn't know it's closed">
+<meta property="og:description" content="Uniswap v4 hooks that read the US trading calendar. Fees widen at the bell, size caps bite after hours. Live on Robinhood Chain.">
+<meta property="og:image" content="https://helps-dev.github.io/bellr/assets/brand/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="BELLR — your pool doesn't know it's closed">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Your pool doesn't know it's closed">
+<meta name="twitter:description" content="Uniswap v4 hooks that read the US trading calendar. Live on Robinhood Chain.">
+<meta name="twitter:image" content="https://helps-dev.github.io/bellr/assets/brand/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=IBM+Plex+Mono:wght@500;600;700&family=Inter+Tight:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="styles/base.css">
+<link rel="stylesheet" href="styles/components.css">
+<link rel="stylesheet" href="styles/blocks.css">
+</head>
+<body>
+
+<canvas class="backdrop" id="backdrop" aria-hidden="true"></canvas>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="sessionbar">
+  <span class="sessionbar__state" id="barState" data-state="closed">
+    <i class="led led--closed"></i><b id="barLabel">MARKET CLOSED</b>
+  </span>
+  <span class="sessionbar__count" id="barCount">NEXT BELL IN —</span>
+  <span class="sessionbar__ca">
+    <span>HOOK</span><code id="ca">0x5B51…20c4</code>
+    <button class="sessionbar__copy" type="button" id="copyCa">COPY</button>
+  </span>
+</div>
+
+<header class="hdr" id="hdr">
+  <a class="hdr__brand" href="#main" aria-label="Bellr home">
+    <svg class="hdr__mark" viewBox="0 0 256 256" aria-hidden="true">
+      <g class="m-swing">
+        <circle cx="128" cy="34" r="14" class="m-brass" stroke="#0B0B0D" stroke-width="12"/>
+        <path d="M128 50c48 0 72 34 72 84v26l18 28H38l18-28v-26c0-50 24-84 72-84z"
+              class="m-brass" stroke="#0B0B0D" stroke-width="14" stroke-linejoin="round"/>
+        <ellipse class="m-clapper m-brass" cx="128" cy="210" rx="19" ry="16" stroke="#0B0B0D" stroke-width="12"/>
+      </g>
+    </svg>
+    <span class="hdr__word">BELLR</span>
+  </a>
+  <nav class="hdr__nav" aria-label="Primary">
+    <a href="#gap">Why</a><a href="#hooks">Hooks</a><a href="#session">Session</a><a href="#contracts">Contracts</a>
+  </nav>
+  <div class="hdr__side">
+    <button class="ibtn" id="themeToggle" type="button" aria-label="Toggle colour scheme" hidden>
+      <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/></svg>
+      <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.6 6.6 0 0 0 10.5 10.5z"/></svg>
+    </button>
+    <button class="btn wallet-btn" type="button" id="walletBtn">Connect</button>
+    <button class="btn btn--brass" type="button" data-open-pool>Open a pool</button>
+    <button class="hdr__burger" id="burger" type="button" aria-expanded="false" aria-label="Menu"><span></span><span></span></button>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="hero">
+  <div class="hero__in">
+    <div>
+      <h1 class="hero__title">Your pool<br>doesn't know<em>it's closed</em></h1>
+      <p class="hero__lede">Uniswap v4 hooks that read the trading calendar. Fees widen at the bell. Size caps bite after hours.</p>
+      <div class="hero__cta">
+        <button class="btn btn--brass btn--lg" type="button" data-open-pool>Open a pool <span class="btn__arrow">&#8594;</span></button>
+        <a class="btn btn--lg" href="#hooks">See the hooks</a>
+      </div>
+    </div>
+    <div class="hero__art">
+      <span class="hero__badge"><i class="led led--open"></i>Live on Robinhood Chain</span>
+      <svg class="tolly" viewBox="-40 -40 1100 1100" data-session="closed" role="img" aria-label="Tolly, the bell unit">
+<defs>
+    <linearGradient id="h-tBody" x1="0.16" y1="0" x2="0.86" y2="1">
+      <stop offset="0"    stop-color="#FFEC9A"/>
+      <stop offset="0.34" stop-color="#FFC53D"/>
+      <stop offset="0.74" stop-color="#EBA114"/>
+      <stop offset="1"    stop-color="#AE7006"/>
+    </linearGradient>
+    <linearGradient id="h-tRim" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFE68C"/>
+      <stop offset="0.55" stop-color="#F0B222"/>
+      <stop offset="1" stop-color="#B2700A"/>
+    </linearGradient>
+    <linearGradient id="h-tDark" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#F2B524"/>
+      <stop offset="1" stop-color="#96600A"/>
+    </linearGradient>
+    <linearGradient id="h-tGlass" x1="0.28" y1="0" x2="0.72" y2="1">
+      <stop offset="0" stop-color="#2E353E"/>
+      <stop offset="0.5" stop-color="#151A20"/>
+      <stop offset="1" stop-color="#080A0D"/>
+    </linearGradient>
+    <radialGradient id="h-tIrisShade" cx="0.62" cy="0.3" r="0.95">
+      <stop offset="0"    stop-color="#FFFFFF" stop-opacity="0.34"/>
+      <stop offset="0.42" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="1"    stop-color="#000000" stop-opacity="0.62"/>
+    </radialGradient>
+    <clipPath id="h-tEyeL"><circle cx="378" cy="416" r="100"/></clipPath>
+    <clipPath id="h-tEyeR"><circle cx="622" cy="416" r="100"/></clipPath>
+    <clipPath id="h-tClipBell">
+      <path d="M500 150c142 0 232 106 250 296 11 120 53 210 92 266H158c39-56 81-146 92-266 18-190 108-296 250-296z"/>
+    </clipPath>
+    <linearGradient id="h-tThroat" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0"    stop-color="#160A0D"/>
+      <stop offset="0.45" stop-color="#2B1015"/>
+      <stop offset="1"    stop-color="#43191F"/>
+    </linearGradient>
+    <linearGradient id="h-tTongue" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#C9463F"/>
+      <stop offset="1" stop-color="#EE7E75"/>
+    </linearGradient>
+    <clipPath id="h-tMouth"><path d="M420 548q80 30 160 0 16 82-80 100-96-18-80-100z"/></clipPath>
+  </defs>
+
+  <g stroke="#0B0B0D" stroke-width="14" stroke-linejoin="round" stroke-linecap="round">
+
+    <ellipse cx="500" cy="920" rx="296" ry="30" fill="#0B0B0D" opacity="0.14" stroke="none"/>
+
+    <g class="t-tilt">
+    <g class="t-drift">
+    <g class="t-swing">
+    <g class="t-squash">
+      <!-- crown loop -->
+      <path d="M500 22a64 64 0 0 1 64 64v66h-42V86a22 22 0 0 0-44 0v66h-42V86a64 64 0 0 1 64-64z" fill="url(#h-tDark)"/>
+
+      <!-- left arm, resting -->
+      <g class="t-arm-l">
+        <path d="M262 546 L128 624" stroke="#0B0B0D" stroke-width="104" fill="none"/>
+        <path d="M262 546 L128 624" stroke="url(#h-tDark)" stroke-width="74" fill="none"/>
+        <circle cx="104" cy="646" r="76" fill="url(#h-tBody)"/>
+        <ellipse cx="56" cy="590" rx="36" ry="25" fill="url(#h-tDark)" transform="rotate(-38 56 590)"/>
+      </g>
+
+      <!-- right arm holds the striker: the bell that rings itself -->
+      <g class="t-arm-r">
+        <path d="M742 524 L872 342" stroke="#0B0B0D" stroke-width="104" fill="none"/>
+        <path d="M742 524 L872 342" stroke="url(#h-tDark)" stroke-width="74" fill="none"/>
+        <circle cx="890" cy="316" r="76" fill="url(#h-tBody)"/>
+        <ellipse cx="844" cy="260" rx="36" ry="25" fill="url(#h-tDark)" transform="rotate(38 844 260)"/>
+        <g class="t-striker">
+          <path d="M878 292 L790 186" stroke="#0B0B0D" stroke-width="30" fill="none"/>
+          <circle cx="774" cy="168" r="52" fill="url(#h-tRim)"/>
+          <circle cx="758" cy="150" r="16" fill="#FFF6DC" opacity="0.7" stroke="none"/>
+        </g>
+      </g>
+
+      <!-- feet with a darker sole so they read as boots, not lumps -->
+      <ellipse cx="262" cy="852" rx="112" ry="54" fill="url(#h-tBody)"/>
+      <ellipse cx="738" cy="852" rx="112" ry="54" fill="url(#h-tBody)"/>
+      <path d="M156 866a112 54 0 0 0 212 0z" fill="#96600A" stroke="none"/>
+      <path d="M632 866a112 54 0 0 0 212 0z" fill="#96600A" stroke="none"/>
+
+      <!-- grounding: a soft occlusion under the rim instead of a cavity -->
+      <ellipse cx="500" cy="792" rx="300" ry="42" fill="#0B0B0D" opacity="0.2" stroke="none"/>
+
+      <!-- bell body -->
+      <path d="M500 150c142 0 232 106 250 296 11 120 53 210 92 266H158c39-56 81-146 92-266 18-190 108-296 250-296z" fill="url(#h-tBody)"/>
+      <g clip-path="url(#h-tClipBell)">
+        <ellipse cx="830" cy="470" rx="140" ry="380" fill="#96600A" opacity="0.42" stroke="none"/>
+        <ellipse cx="322" cy="276" rx="98" ry="160" fill="#FFF8D6" opacity="0.62" stroke="none"/>
+        <!-- narrow specular: what separates polished metal from flat yellow -->
+        <ellipse cx="296" cy="304" rx="25" ry="148" fill="#FFFDF0" opacity="0.7" stroke="none" transform="rotate(-9 296 304)"/>
+        <!-- bounce light climbing the shadow side -->
+        <ellipse cx="798" cy="602" rx="54" ry="150" fill="#FFD98A" opacity="0.28" stroke="none"/>
+        <!-- sound bow: real bells thicken and darken just above the rim -->
+        <path d="M150 650h700v44H150z" fill="#8A5806" opacity="0.28"/>
+        <!-- cast rings around the crown -->
+        <path d="M288 210h424M274 242h452" stroke="#8A5806" stroke-opacity="0.4" stroke-width="9"/>
+        <path d="M288 218h424M274 250h452" stroke="#FFF3C4" stroke-opacity="0.38" stroke-width="6"/>
+      </g>
+
+      <!-- rim, with a cream inner edge to break up the brass -->
+      <path d="M142 690h716a36 36 0 0 1 36 36v38a36 36 0 0 1-36 36H142a36 36 0 0 1-36-36v-38a36 36 0 0 1 36-36z" fill="url(#h-tRim)"/>
+      <path d="M182 716h636" stroke="#FFF6DC" stroke-width="10" opacity="0.55"/>
+      <path d="M182 774h636" stroke="#0B0B0D" stroke-width="10" opacity="0.26"/>
+
+      <!-- face: white sclera, coloured iris carrying the session, glossy
+           highlights over the pupil edge, brows above. The iris moves inside
+           the eye when the cursor does, not the whole face. -->
+      <g class="t-eyes">
+          <g class="t-eye">
+            <circle cx="378" cy="416" r="100" fill="#FBF8F1" stroke="none"/>
+            <g clip-path="url(#h-tEyeL)">
+              <circle cx="378" cy="416" r="100" fill="#C6D2D6" stroke="none"/>
+              <circle cx="378" cy="429" r="100" fill="#FDFBF6" stroke="none"/>
+              <g class="t-look">
+                <circle class="t-iris" cx="378" cy="414" r="59" stroke="none"/>
+                <circle cx="378" cy="414" r="59" fill="url(#h-tIrisShade)" stroke="none"/>
+                <circle cx="378" cy="414" r="33" fill="#0A0A0C" stroke="none"/>
+                <circle class="t-glint" cx="400" cy="391" r="24" stroke="none"/>
+                <circle class="t-glint t-glint--sm" cx="385" cy="425" r="11" stroke="none"/>
+              </g>
+              <circle class="t-lid" cx="378" cy="278" r="116" fill="url(#h-tBody)" stroke="none"/>
+            </g>
+            <circle cx="378" cy="416" r="100" fill="none" stroke="#0B0B0D" stroke-width="16"/>
+          </g>
+          <g class="t-eye">
+            <circle cx="622" cy="416" r="100" fill="#FBF8F1" stroke="none"/>
+            <g clip-path="url(#h-tEyeR)">
+              <circle cx="622" cy="416" r="100" fill="#C6D2D6" stroke="none"/>
+              <circle cx="622" cy="429" r="100" fill="#FDFBF6" stroke="none"/>
+              <g class="t-look">
+                <circle class="t-iris" cx="622" cy="414" r="59" stroke="none"/>
+                <circle cx="622" cy="414" r="59" fill="url(#h-tIrisShade)" stroke="none"/>
+                <circle cx="622" cy="414" r="33" fill="#0A0A0C" stroke="none"/>
+                <circle class="t-glint" cx="644" cy="391" r="24" stroke="none"/>
+                <circle class="t-glint t-glint--sm" cx="629" cy="425" r="11" stroke="none"/>
+              </g>
+              <circle class="t-lid" cx="622" cy="278" r="116" fill="url(#h-tBody)" stroke="none"/>
+            </g>
+            <circle cx="622" cy="416" r="100" fill="none" stroke="#0B0B0D" stroke-width="16"/>
+          </g>
+      </g>
+
+      <!-- brows -->
+      <path class="t-brow" d="M244 276q100-64 204-32-96 12-184 70z" fill="#0F1A1F" stroke="none"/>
+      <path class="t-brow" d="M756 276q-100-64-204-32 96 12 184 70z" fill="#0F1A1F" stroke="none"/>
+
+      <!-- mouth: a cavity, not a shape. Dark at the back, teeth hugging the
+           top lip, tongue sitting at the front with a centre crease. -->
+      <g class="t-mouth">
+        <path d="M420 548q80 30 160 0 16 82-80 100-96-18-80-100z" fill="url(#h-tThroat)" stroke="#0B0B0D" stroke-width="13"/>
+        <g clip-path="url(#h-tMouth)">
+          <path d="M404 532q96 42 192 0v32q-96 30-192 0z" fill="#FDF7EC" stroke="none"/>
+          <path d="M404 564q96 28 192 0" fill="none" stroke="#0B0B0D" stroke-opacity="0.28" stroke-width="7"/>
+          <path d="M500 590q68 0 76 46 6 42-76 46-82-4-76-46 8-46 76-46z" fill="url(#h-tTongue)" stroke="none"/>
+          <path d="M500 598v60" stroke="#A8322C" stroke-opacity="0.45" stroke-width="7" stroke-linecap="round"/>
+          <ellipse cx="450" cy="612" rx="23" ry="10" fill="#FFFFFF" opacity="0.2" stroke="none" transform="rotate(-16 450 612)"/>
+        </g>
+      </g>
+
+      <circle cx="316" cy="258" r="15" fill="#0B0B0D" opacity="0.24" stroke="none"/>
+      <circle cx="684" cy="258" r="15" fill="#0B0B0D" opacity="0.24" stroke="none"/>
+    </g>
+    </g>
+    </g>
+    </g>
+  </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<div class="tape" aria-hidden="true">
+  <div class="tape__track">
+    <span>Session-aware fees</span><i>&#9679;</i><span>Halt mirroring</span><i>&#9679;</i><span>Weekend carry</span><i>&#9679;</i><span>No keeper bot</span><i>&#9679;</i>
+    <span>Session-aware fees</span><i>&#9679;</i><span>Halt mirroring</span><i>&#9679;</i><span>Weekend carry</span><i>&#9679;</i><span>No keeper bot</span><i>&#9679;</i>
+  </div>
+</div>
+
+<!-- LIVE SESSION — the data is the graphic -->
+<section class="block on-green" id="live">
+  <div class="block__in">
+    <p class="kicker">Right now &#183; NYSE</p>
+    <p class="mega" id="clockState" data-state="closed"><span id="clockLabel">CLOSED</span></p>
+    <p class="block__lede" style="max-width:34ch;margin-top:0">
+      <span id="clockNow" class="mono">—</span> &#183; next bell in
+      <b class="mono" id="clockCount">—</b>
+    </p>
+    <div class="ribbon" style="margin:2.5rem 0">
+      <div class="ribbon__track" id="ribbon" role="img" aria-label="Today's trading session"></div>
+      <div class="ribbon__scale"><span>00:00</span><span>09:30</span><span>16:00</span><span>24:00</span></div>
+    </div>
+    <div class="figs">
+      <div class="fig"><b id="rowFee">—</b><span class="label">Pool fee now</span></div>
+      <div class="fig"><b id="rowCap">—</b><span class="label">Wallet cap</span></div>
+      <div class="fig"><b id="rowBand">—</b><span class="label">Oracle band</span></div>
+      <div class="fig"><b id="rowRegime">—</b><span class="label">Armed regime</span></div>
+    </div>
+    <p class="label" style="margin-top:1.5rem">
+      Today: <span id="rowDay">—</span> &#183; next holiday: <span id="rowHoliday">—</span>
+    </p>
+  </div>
+</section>
+
+<!-- THE GAP -->
+<section class="block on-coral" id="gap">
+  <div class="block__in">
+    <div class="block__head">
+      <p class="kicker">The gap</p>
+      <p class="mega">4:00&#8239;PM</p>
+      <p class="block__lede" style="max-width:32ch;margin-top:0">Four things break the moment the bell rings. None of them are market problems.</p>
+    </div>
+    <div class="shorts">
+      <article class="short"><b>01</b><h3>Fees stop making sense</h3><p>A rate set for 24/7 trading is a gift to arbitrage at 2am.</p></article>
+      <article class="short"><b>02</b><h3>The oracle goes flat</h3><p>The feed stops. The pool keeps quoting a dead number.</p></article>
+      <article class="short"><b>03</b><h3>62 hours of weekend</h3><p>Price moves elsewhere. Monday's first swap takes the whole gap.</p></article>
+      <article class="short"><b>04</b><h3>Earnings at 16:05</h3><p>The biggest repricing lands five minutes after the pool goes blind.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- HOW -->
+<section class="block">
+  <div class="block__in">
+    <div class="block__head block__head--split">
+      <div><p class="kicker">Three moves</p><h2 class="block__title">Pair. Arm. Ring.</h2></div>
+      <p class="block__lede">We don't replace your launchpad or your AMM. We write the rule layer between them.</p>
+    </div>
+    <div class="steps">
+      <article class="step"><p class="step__n">01</p><h3>Pair to an equity</h3><p>Launch on Pons, pair to a tokenised stock. That pairing gives the pool a calendar.</p></article>
+      <article class="step"><p class="step__n">02</p><h3>Arm a policy</h3><p>Set fee, cap and band per regime. Permissions get mined into the hook address.</p></article>
+      <article class="step"><p class="step__n">03</p><h3>Let the bell work</h3><p>The hook flips the regime from inside the swap. Nothing to trigger. Nothing to miss.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- HOOKS -->
+<section class="block on-ink" id="hooks">
+  <div class="block__in">
+    <div class="block__head block__head--split">
+      <div><p class="kicker">Six hooks</p><h2 class="block__title">All inside the swap.</h2></div>
+      <p class="block__lede">If the rule reverts, the swap doesn't happen. A keeper bot can be out-raced. A hook cannot.</p>
+    </div>
+    <div class="hooks">
+      <article class="hook"><p class="hook__name">TOLL</p><h3>Session regime</h3><p>Reads the calendar. Every other module obeys its verdict.</p><span class="hook__when">beforeSwap</span></article>
+      <article class="hook"><p class="hook__name">WIDEN</p><h3>Close-out fee</h3><p>Fee ramps into the bell and stays wide while the book is thin.</p><span class="hook__when">beforeSwap</span></article>
+      <article class="hook"><p class="hook__name">DRIFT</p><h3>Staleness guard</h3><p>Tightens the band when the equity oracle stops printing.</p><span class="hook__when">beforeSwap</span></article>
+      <article class="hook"><p class="hook__name">CURFEW</p><h3>Out-of-hours cap</h3><p>Caps per-wallet size once regular hours end.</p><span class="hook__when">beforeSwap</span></article>
+      <article class="hook"><p class="hook__name">HALT</p><h3>Halt mirror</h3><p>If the underlying halts, the pool halts with it.</p><span class="hook__when">beforeSwap</span></article>
+      <article class="hook"><p class="hook__name">CARRY</p><h3>Weekend carry</h3><p>Out-of-hours fees fund a standing bid below spot.</p><span class="hook__when">afterSwap</span></article>
+    </div>
+  </div>
+</section>
+
+<!-- SCRUBBER -->
+<section class="block" id="session">
+  <div class="block__in">
+    <div class="block__head block__head--split">
+      <div><p class="kicker">Drag a week</p><h2 class="block__title">One pool, four markets.</h2></div>
+      <p class="block__lede">Thanksgiving week shows all of it: a full closure, a half-day, then the weekend.</p>
+    </div>
+    <div class="scrub">
+      <div class="scrub__main">
+        <div class="depth__head">
+          <span class="depth__pair">MEME / tNVDA</span>
+          <span class="oracle-badge" id="oracleBadge" data-source="local"><i></i><span id="oracleText">calendar computed locally</span></span>
+        </div>
+        <div class="scrub__presets" id="scrubPresets"></div>
+        <div class="scrub__track" id="scrubTrack" tabindex="0" role="slider"
+             aria-label="Scrub through the trading week" aria-valuemin="0" aria-valuemax="10080"></div>
+        <p class="scrub__hint">Drag, or focus it and use &#8592; &#8594; (shift for hours).</p>
+      </div>
+      <div class="scrub__side" id="scrubOut"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTRACTS -->
+<section class="block on-brass" id="contracts">
+  <div class="block__in">
+    <p class="kicker">On chain</p>
+    <p class="ticker-big">LIVE</p>
+    <p class="block__lede" style="margin-top:1.5rem">Deployed to Robinhood Chain on 18 September 2026, block 66,246,124.
+      There is no BELLR token. Arming a pool costs gas and nothing else.</p>
+
+    <div class="uses">
+      <div class="use"><b>01</b><h4>BellrPool</h4>
+        <p><code class="mono">0x5B515cD5121efcbd1bA037be5a62d76258d220c4</code>
+        All six modules. The address ends in <b>20C4</b> because Uniswap v4 reads a hook's permissions off its own address.</p></div>
+      <div class="use"><b>02</b><h4>TollHook</h4>
+        <p><code class="mono">0xC741bc587588981F096a8EB8b0bf374B5d22a080</code>
+        Session pricing alone, for a pool that wants nothing else.</p></div>
+      <div class="use"><b>03</b><h4>SessionCalendar</h4>
+        <p><code class="mono">0xd9c0421A5759b1aA2609162BD2178f147cd7E542</code>
+        New York hours resolved off-chain and published as plain UTC. Sessions through 30 June 2027.</p></div>
+      <div class="use"><b>04</b><h4>BellrOracle</h4>
+        <p><code class="mono">0x55F4B8e88B7F1C50740a6909dB25E187D79015d0</code>
+        Reference prices for DRIFT. One update may move a price by at most 10%.</p></div>
+    </div>
+
+    <div style="display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1.5rem">
+      <button class="btn btn--ink" type="button" id="copyCa2">Copy hook address</button>
+      <a class="btn" href="https://robinhoodchain.blockscout.com/address/0x5B515cD5121efcbd1bA037be5a62d76258d220c4"
+         target="_blank" rel="noopener noreferrer">View on the explorer</a>
+    </div>
+    <div class="ca-strip" hidden><code id="ca2">0x5B515cD5121efcbd1bA037be5a62d76258d220c4</code></div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="block">
+  <div class="block__in">
+    <div class="block__head"><p class="kicker">Roadmap</p><h2 class="block__title">Six phases.</h2></div>
+    <div class="phases">
+      <article class="phase"><span class="phase__id">P1</span><div class="phase__body"><h3>Calendar oracle</h3><p>Live on mainnet. Sessions published through June 2027.</p></div><span class="status status--ship">Done</span></article>
+      <article class="phase"><span class="phase__id">P2</span><div class="phase__body"><h3>All six modules</h3><p>TOLL, WIDEN, DRIFT, CURFEW, HALT, CARRY — one hook, mined to 20C4.</p></div><span class="status status--ship">Done</span></article>
+      <article class="phase"><span class="phase__id">P3</span><div class="phase__body"><h3>First pool</h3><p>Contracts are live and the arming flow broadcasts. Nobody has opened one yet.</p></div><span class="status status--next">Next</span></article>
+      <article class="phase"><span class="phase__id">P4</span><div class="phase__body"><h3>Halt mirror</h3><p>Running against Robinhood's own feed. Equity halts reach the pool.</p></div><span class="status status--ship">Done</span></article>
+      <article class="phase"><span class="phase__id">P5</span><div class="phase__body"><h3>Second half of 2027</h3><p>The calendar reads Weekend past its horizon, so it gets extended before July.</p></div><span class="status status--planned">Planned</span></article>
+      <article class="phase"><span class="phase__id">P6</span><div class="phase__body"><h3>Second calendar</h3><p>A non-US exchange.</p></div><span class="status status--planned">Planned</span></article>
+    </div>
+  </div>
+</section>
+
+<!-- RISK -->
+<section class="block on-ink">
+  <div class="block__in">
+    <div class="block__head"><p class="kicker">Read this part</p><h2 class="block__title">LPing can lose money.</h2></div>
+    <div class="risks">
+      <div class="risk-item"><h3>Unaudited</h3><p>New code inside live swaps. An audit is scheduled, not finished.</p></div>
+      <div class="risk-item"><h3>The calendar is an oracle</h3><p>A wrong calendar puts the pool in the wrong regime, faithfully.</p></div>
+      <div class="risk-item"><h3>Rules cut both ways</h3><p>CURFEW caps you too. HALT can block your exit.</p></div>
+      <div class="risk-item"><h3>Not yield</h3><p>Hooks change the pool's behaviour, not the market's direction.</p></div>
+    </div>
+    <p class="label" style="margin-top:2.5rem;max-width:64ch;line-height:1.7">
+      Nothing here is investment advice. Figures and charts are schematic illustrations,
+      not live market data. You sign every transaction yourself.
+    </p>
+  </div>
+</section>
+
+</main>
+
+<footer class="ftr">
+  <div class="ftr__in">
+    <div>
+      <p class="ftr__word">BELL<em>R</em></p>
+      <p>The bell rings twice a day and your pool should hear both. Non-custodial, unaudited, built in public.</p>
+    </div>
+    <nav class="ftr__links" aria-label="Footer">
+      <div><h4>Protocol</h4><a href="#hooks">Hooks</a><a href="#session">Session</a><a href="#contracts">Contracts</a></div>
+      <div><h4>Learn</h4><a href="#gap">The gap</a><a href="#live">Right now</a></div>
+      <div><h4>Built on</h4><a href="https://docs.uniswap.org/contracts/v4/overview" target="_blank" rel="noopener noreferrer">Uniswap v4</a><a href="https://docs.robinhood.com/chain/" target="_blank" rel="noopener noreferrer">Robinhood Chain</a><a href="https://robinhoodchain.blockscout.com/address/0x5B515cD5121efcbd1bA037be5a62d76258d220c4" target="_blank" rel="noopener noreferrer">Explorer</a></div>
+    </nav>
+  </div>
+  <div class="ftr__bottom">
+    <p>&#169; <span id="yr">2026</span> Bellr</p>
+    <p>Not affiliated with Uniswap Labs, Pons or Robinhood Markets</p>
+  </div>
+</footer>
+
+<div class="sheet" id="poolSheet" hidden aria-hidden="true">
+  <div class="sheet__scrim" data-close-sheet></div>
+  <div class="sheet__panel" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+    <header class="sheet__head">
+      <div id="sheetSteps"></div>
+      <h2 id="sheetTitle">Arm a pool</h2>
+      <button class="sheet__close" type="button" data-close-sheet aria-label="Close">&#10005;</button>
+    </header>
+    <div class="sheet__body" id="sheetBody"></div>
+    <div class="sheet__errors" id="sheetErrors" hidden></div>
+    <footer class="sheet__foot">
+      <button class="btn" type="button" id="sheetBack">Back</button>
+      <button class="btn" type="button" data-close-sheet>Cancel</button>
+      <button class="btn btn--brass" type="button" id="sheetNext">Continue</button>
+    </footer>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script type="module" src="scripts/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+/*
+  # The page never takes user input into the DOM and loads nothing it does not
+  # name, so these cost nothing and close the easy holes.
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=()
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/scripts/*
+  # Scripts carry contract addresses. A stale copy would point a wallet at the
+  # wrong place, so they revalidate rather than sit in a cache for a year.
+  Cache-Control: public, max-age=0, must-revalidate
+
+/styles/*
+  Cache-Control: public, max-age=0, must-revalidate

@@ -1,0 +1,5 @@
+# BELLR — everything here is public.
+User-agent: *
+Allow: /
+
+Sitemap: https://helps-dev.github.io/bellr/sitemap.xml

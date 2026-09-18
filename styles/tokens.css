@@ -1,0 +1,112 @@
+/* ==========================================================================
+   BELLR — design tokens
+   Bold graphic: bone paper, ink black, and four colours that are allowed to
+   shout. Sections are full-bleed colour blocks, so every colour here has to
+   hold black or white type at full strength.
+   ========================================================================== */
+
+:root {
+  /* ---- palette ---------------------------------------------------------- */
+  --bone:    #F2EDE1;
+  --bone-2:  #E7DFCD;
+  --ink:     #0B0B0D;
+  --ink-2:   #1A1A1F;
+
+  --blue:    #2B4CFF;
+  --green:   #00E06B;
+  --coral:   #FF3B2F;
+  --brass:   #FFC53D;
+
+  /* ---- semantic --------------------------------------------------------- */
+  --bg:       var(--bone);
+  --fg:       var(--ink);
+  --fg-muted: #57544C;
+  --fg-faint: #8A857A;
+  --rule:     var(--ink);
+
+  --open:   #0E8A4F;
+  --closed: #D02A1E;
+  --pre:    #2B4CFF;
+
+  /* ---- type ------------------------------------------------------------- */
+  --font-display: 'Bricolage Grotesque', 'Archivo', Helvetica, sans-serif;
+  --font-body: 'Inter Tight', system-ui, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --fs-label: 0.6875rem;
+  --fs-meta:  0.8125rem;
+  --fs-body:  1.0625rem;
+  --fs-lede:  clamp(1.125rem, 1rem + 0.7vw, 1.5rem);
+  --fs-h3:    clamp(1.375rem, 1.1rem + 1.2vw, 2rem);
+  --fs-h2:    clamp(2.75rem, 1.4rem + 5.6vw, 6rem);
+  --fs-h1:    clamp(3.25rem, 1.2rem + 9vw, 9rem);
+  --fs-mega:  clamp(4.5rem, 1rem + 16vw, 16rem);
+
+  --track-label: 0.16em;
+  --track-tight: -0.045em;
+
+  /* ---- space ------------------------------------------------------------ */
+  --gutter: clamp(1.25rem, 0.5rem + 3vw, 5rem);
+  --maxw: 84rem;
+  --block-y: clamp(5rem, 3rem + 8vw, 11rem);
+
+  /* ---- shape ------------------------------------------------------------ */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 20px;
+  --r-pill: 999px;
+  --border: 3px solid var(--ink);
+
+  /* ---- motion ----------------------------------------------------------- */
+  --ease: cubic-bezier(.22,.61,.36,1);
+  --ease-out: cubic-bezier(.16,1,.3,1);
+  --t-fast: 140ms;
+  --t-med: 260ms;
+  --t-slow: 520ms;
+
+  /* legacy names still referenced by the form and scrubber components */
+  --surface: var(--bone);
+  --surface-2: var(--bone-2);
+  --sunk: var(--bone-2);
+  --line: rgba(11,11,13,.18);
+  --line-soft: rgba(11,11,13,.10);
+  --line-hard: var(--ink);
+  --up: var(--open);
+  --down: var(--closed);
+  --sh-1: 0 2px 0 var(--ink);
+  --sh-2: 0 4px 0 var(--ink);
+  --sh-3: 0 10px 0 var(--ink);
+}
+
+/* Dark is a block colour here, not a separate theme: inverted sections set
+   these on themselves so components inside them flip without extra rules. */
+.on-ink, .on-blue, .on-coral {
+  --bg: var(--ink);
+  --fg: var(--bone);
+  --fg-muted: rgba(242,237,225,.72);
+  --fg-faint: rgba(242,237,225,.5);
+  --rule: var(--bone);
+  --surface: rgba(255,255,255,.06);
+  --surface-2: rgba(255,255,255,.10);
+  --sunk: rgba(0,0,0,.32);
+  --line: rgba(242,237,225,.24);
+  --line-soft: rgba(242,237,225,.14);
+  --line-hard: var(--bone);
+  --border: 3px solid var(--bone);
+  --sh-1: 0 2px 0 var(--bone);
+  --sh-2: 0 4px 0 var(--bone);
+}
+.on-blue  { --bg: var(--blue); }
+.on-coral { --bg: var(--coral); }
+.on-brass {
+  --bg: var(--brass); --fg: var(--ink); --fg-muted: rgba(11,11,13,.72);
+  --fg-faint: rgba(11,11,13,.55); --rule: var(--ink);
+  --surface: rgba(255,255,255,.34); --surface-2: rgba(255,255,255,.5);
+  --sunk: rgba(11,11,13,.12); --line: rgba(11,11,13,.24);
+}
+.on-green {
+  --bg: var(--green); --fg: var(--ink); --fg-muted: rgba(11,11,13,.74);
+  --fg-faint: rgba(11,11,13,.55); --rule: var(--ink);
+  --surface: rgba(255,255,255,.34); --surface-2: rgba(255,255,255,.5);
+  --sunk: rgba(11,11,13,.12); --line: rgba(11,11,13,.24);
+}

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="Bellr mark">
+  <defs>
+    <linearGradient id="brass" x1="0.15" y1="0" x2="0.85" y2="1">
+      <stop offset="0" stop-color="#FFD87A"/>
+      <stop offset="0.45" stop-color="#FFB43D"/>
+      <stop offset="1" stop-color="#C87A08"/>
+    </linearGradient>
+    <linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.35"/>
+      <stop offset="0.55" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- crown -->
+  <circle cx="128" cy="34" r="14" fill="url(#brass)"/>
+  <rect x="120" y="40" width="16" height="14" rx="6" fill="url(#brass)"/>
+
+  <!-- bell body -->
+  <path d="M128 50c48 0 72 34 72 84v26l18 28H38l18-28v-26c0-50 24-84 72-84z" fill="url(#brass)"/>
+  <path d="M128 50c48 0 72 34 72 84v26l18 28H38l18-28v-26c0-50 24-84 72-84z" fill="url(#sheen)"/>
+
+  <!-- the session line: a price level cut straight through the bell -->
+  <rect x="38" y="150" width="180" height="13" rx="6.5" fill="#0A0D13"/>
+  <rect x="52" y="153" width="60" height="7" rx="3.5" fill="#3BE08A"/>
+  <rect x="120" y="153" width="84" height="7" rx="3.5" fill="#FF6B6B"/>
+
+  <!-- clapper -->
+  <ellipse cx="128" cy="210" rx="19" ry="16" fill="url(#brass)"/>
+</svg>
