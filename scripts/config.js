@@ -128,7 +128,7 @@ export const EQUITIES = [
  * page feel quick.
  */
 export const WALLETCONNECT = {
-  projectId: '',
+  projectId: 'f03c866a8282707d399c591136099922',
   /** What the wallet shows the user in its approval screen. */
   metadata: {
     name: 'BELLR',
