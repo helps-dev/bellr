@@ -3,9 +3,14 @@
    Reads the session calendar from the on-chain oracle when one is deployed,
    and falls back to the local computation otherwise. The rest of the app never
    needs to know which it got — only `source` differs, and the UI says so.
+
+   Reads go to a public RPC over plain fetch, never through the visitor's
+   wallet: an unsolicited wallet request can make the wallet show a connect
+   prompt on page load, and a wallet on the wrong chain would answer about
+   the wrong chain.
    ========================================================================== */
 
-import { CONTRACTS, TARGET } from './config.js';
+import { CONTRACTS, TARGET, RPC_URL } from './config.js';
 import { encodeCall, encodeUint, encodeAddress, decodeUint, decodeBool } from './abi.js';
 import { resolveSession } from './session.js';
 
@@ -14,17 +19,20 @@ const CHAIN_REGIME = ['closed', 'pre', 'regular', 'post', 'holiday', 'weekend'];
 
 export const state = { source: 'local', lastError: null };
 
-function provider() {
-  return window.ethereum ?? null;
-}
-
 async function ethCall(data) {
-  const p = provider();
-  if (!p || !CONTRACTS.calendar) throw new Error('no oracle');
-  return p.request({
-    method: 'eth_call',
-    params: [{ to: CONTRACTS.calendar, data }, 'latest'],
+  if (!CONTRACTS.calendar) throw new Error('no oracle');
+  const res = await fetch(RPC_URL, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({
+      jsonrpc: '2.0', id: 1,
+      method: 'eth_call',
+      params: [{ to: CONTRACTS.calendar, data }, 'latest'],
+    }),
   });
+  const json = await res.json();
+  if (json.error) throw new Error(json.error.message);
+  return json.result;
 }
 
 /** Regime straight from the oracle. Throws if there is no oracle to ask. */
@@ -51,7 +59,7 @@ export async function chainHalted(token) {
 export async function getSession(date = new Date()) {
   const local = resolveSession(date);
 
-  if (!CONTRACTS.calendar || !provider()) {
+  if (!CONTRACTS.calendar) {
     state.source = 'local';
     return local;
   }

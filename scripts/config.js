@@ -147,6 +147,16 @@ export const RH_API = {
 };
 
 /**
+ * Public RPC for read-only calls (the session oracle).
+ *
+ * Reads must never go through the visitor's wallet: an unsolicited request
+ * makes some wallets show a connect prompt on page load, and a wallet on the
+ * wrong chain answers about the wrong chain. The official hostname is
+ * DNS-hijacked from Indonesia; this public node is not.
+ */
+export const RPC_URL = 'https://robinhood-rpc.publicnode.com';
+
+/**
  * The six behaviours a pool can switch on.
  *
  * A Uniswap v4 pool has exactly one hook address, so these are not six
