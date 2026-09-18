@@ -40,60 +40,70 @@
       <stop offset="1" stop-color="#EE7E75"/>
     </linearGradient>
     <clipPath id="h-tMouth"><path d="M420 548q80 30 160 0 16 82-80 100-96-18-80-100z"/></clipPath>
+    <linearGradient id="h-tCape" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0"   stop-color="#0E8A4F"/>
+      <stop offset="0.5" stop-color="#0A5C36"/>
+      <stop offset="1"   stop-color="#063D22"/>
+    </linearGradient>
+    <linearGradient id="h-tGlove" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#FFFDF6"/>
+      <stop offset="1" stop-color="#EDE4D0"/>
+    </linearGradient>
+    <linearGradient id="h-tWood" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#A86A2C"/>
+      <stop offset="1" stop-color="#6E3F10"/>
+    </linearGradient>
   </defs>
 
   <g stroke="#0B0B0D" stroke-width="14" stroke-linejoin="round" stroke-linecap="round">
 
-    <ellipse cx="500" cy="920" rx="296" ry="30" fill="#0B0B0D" opacity="0.14" stroke="none"/>
+    <ellipse cx="500" cy="916" rx="306" ry="32" fill="#0B0B0D" opacity="0.14" stroke="none"/>
 
     <g class="t-tilt">
     <g class="t-drift">
     <g class="t-swing">
     <g class="t-squash">
+
+      <!-- the cape: session green, worn like a hero's. Drawn first so the
+           body and arms always sit in front of it. The hem ends in points,
+           the way a cape reads "moving" even in a still. -->
+      <g class="t-cape">
+        <path d="M340 370C214 382 104 478 68 626c-22 98-24 180 6 242l54-62 34 102 56-74 44 98c36-48 52-116 54-192 2-92-2-206 24-362z" fill="url(#h-tCape)"/>
+        <path d="M660 370c126 12 236 108 272 256 22 98 24 180-6 242l-54-62-34 102-56-74-44 98c-36-48-52-116-54-192-2-92 2-206-24-362z" fill="url(#h-tCape)"/>
+        <!-- inner folds, the bright lining catching light -->
+        <path d="M290 460c-60 50-96 132-108 228M306 540c-44 60-68 138-74 214" fill="none" stroke="#00E06B" stroke-width="12" stroke-opacity="0.55"/>
+        <path d="M710 460c60 50 96 132 108 228M694 540c44 60 68 138 74 214" fill="none" stroke="#00E06B" stroke-width="12" stroke-opacity="0.55"/>
+      </g>
+
       <!-- crown loop -->
       <path d="M500 22a64 64 0 0 1 64 64v66h-42V86a22 22 0 0 0-44 0v66h-42V86a64 64 0 0 1 64-64z" fill="url(#h-tDark)"/>
 
-      <!-- left arm, resting -->
+      <!-- left arm, resting: white cartoon glove on a brass wrist -->
       <g class="t-arm-l">
         <path d="M262 546 L128 624" stroke="#0B0B0D" stroke-width="104" fill="none"/>
         <path d="M262 546 L128 624" stroke="url(#h-tDark)" stroke-width="74" fill="none"/>
-        <circle cx="104" cy="646" r="76" fill="url(#h-tBody)"/>
-        <ellipse cx="56" cy="590" rx="36" ry="25" fill="url(#h-tDark)" transform="rotate(-38 56 590)"/>
+        <circle cx="104" cy="646" r="74" fill="url(#h-tGlove)"/>
+        <path d="M62 604q-8-30 16-40M94 590q-2-32 24-36M128 594q4-30 28-30" fill="none" stroke="#0B0B0D" stroke-width="10"/>
+        <ellipse cx="42" cy="680" rx="27" ry="36" fill="url(#h-tGlove)" transform="rotate(-32 42 680)"/>
       </g>
 
-      <!-- right arm holds the striker: the bell that rings itself -->
+      <!-- right arm raised, glove gripping the mallet: the bell that rings itself -->
       <g class="t-arm-r">
         <path d="M742 524 L872 342" stroke="#0B0B0D" stroke-width="104" fill="none"/>
         <path d="M742 524 L872 342" stroke="url(#h-tDark)" stroke-width="74" fill="none"/>
-        <circle cx="890" cy="316" r="76" fill="url(#h-tBody)"/>
-        <ellipse cx="844" cy="260" rx="36" ry="25" fill="url(#h-tDark)" transform="rotate(38 844 260)"/>
         <g class="t-striker">
-          <path d="M878 292 L790 186" stroke="#0B0B0D" stroke-width="30" fill="none"/>
-          <circle cx="774" cy="168" r="52" fill="url(#h-tRim)"/>
-          <circle cx="758" cy="150" r="16" fill="#FFF6DC" opacity="0.7" stroke="none"/>
+          <path d="M878 292 L786 178" stroke="#0B0B0D" stroke-width="34" fill="none"/>
+          <path d="M878 292 L786 178" stroke="url(#h-tWood)" stroke-width="20" fill="none"/>
+          <circle cx="770" cy="160" r="58" fill="url(#h-tRim)"/>
+          <circle cx="752" cy="140" r="17" fill="#FFF6DC" opacity="0.7" stroke="none"/>
         </g>
-      </g>
-
-      <!-- Sneakers. The brass lumps read as part of the object; shoes read as a
-           character wearing something, which is most of the personality. The
-           green flash on each one is the only place the session colour appears
-           below the face — a band around the body was tried and cut straight
-           across his mouth, because on this bell the face is most of the body. -->
-      <g>
-        <path d="M168 796h104c26 0 48 14 74 30 22 14 40 22 40 40 0 20-18 32-46 32H168c-30 0-54-16-54-38v-26c0-22 24-38 54-38z" fill="#FFF8EE"/>
-        <path d="M114 856h272v20c0 16-14 28-34 28H148c-20 0-34-12-34-28z" fill="#E4DCC8"/>
-        <path d="M170 830h78" stroke="#00E06B" stroke-width="18" stroke-linecap="round" fill="none"/>
-        <path d="M262 800c14 16 34 28 58 36" stroke="#0B0B0D" stroke-width="9" fill="none" opacity="0.42"/>
-      </g>
-      <g transform="translate(1000 0) scale(-1 1)">
-        <path d="M168 796h104c26 0 48 14 74 30 22 14 40 22 40 40 0 20-18 32-46 32H168c-30 0-54-16-54-38v-26c0-22 24-38 54-38z" fill="#FFF8EE"/>
-        <path d="M114 856h272v20c0 16-14 28-34 28H148c-20 0-34-12-34-28z" fill="#E4DCC8"/>
-        <path d="M170 830h78" stroke="#00E06B" stroke-width="18" stroke-linecap="round" fill="none"/>
-        <path d="M262 800c14 16 34 28 58 36" stroke="#0B0B0D" stroke-width="9" fill="none" opacity="0.42"/>
+        <circle cx="890" cy="316" r="74" fill="url(#h-tGlove)"/>
+        <path d="M852 272q-6-30 18-38M884 260q0-32 26-34M916 266q6-28 30-26" fill="none" stroke="#0B0B0D" stroke-width="10"/>
+        <ellipse cx="950" cy="352" rx="27" ry="36" fill="url(#h-tGlove)" transform="rotate(28 950 352)"/>
       </g>
 
       <!-- grounding: a soft occlusion under the rim instead of a cavity -->
-      <ellipse cx="500" cy="792" rx="300" ry="42" fill="#0B0B0D" opacity="0.2" stroke="none"/>
+      <ellipse cx="500" cy="900" rx="316" ry="38" fill="#0B0B0D" opacity="0.2" stroke="none"/>
 
       <!-- bell body -->
       <path d="M500 150c142 0 232 106 250 296 11 120 53 210 92 266H158c39-56 81-146 92-266 18-190 108-296 250-296z" fill="url(#h-tBody)"/>
@@ -111,10 +121,17 @@
         <path d="M288 218h424M274 250h452" stroke="#FFF3C4" stroke-opacity="0.38" stroke-width="6"/>
       </g>
 
-      <!-- rim, with a cream inner edge to break up the brass -->
-      <path d="M142 690h716a36 36 0 0 1 36 36v38a36 36 0 0 1-36 36H142a36 36 0 0 1-36-36v-38a36 36 0 0 1 36-36z" fill="url(#h-tRim)"/>
-      <path d="M182 716h636" stroke="#FFF6DC" stroke-width="10" opacity="0.55"/>
-      <path d="M182 774h636" stroke="#0B0B0D" stroke-width="10" opacity="0.26"/>
+      <!-- flared lip, the mouth of the bell, and the clapper inside it -->
+      <path d="M158 698c84 10 600 10 684 0 22 34 36 62 42 88-184 50-584 50-768 0 6-26 20-54 42-88z" fill="url(#h-tRim)"/>
+      <ellipse cx="500" cy="800" rx="376" ry="50" fill="#241302"/>
+      <ellipse cx="500" cy="792" rx="344" ry="39" fill="#120904"/>
+      <g class="t-clapper">
+        <path d="M500 706v92" stroke="#0B0B0D" stroke-width="32" fill="none"/>
+        <path d="M500 706v92" stroke="url(#h-tDark)" stroke-width="18" fill="none"/>
+        <circle cx="500" cy="838" r="58" fill="url(#h-tRim)"/>
+        <circle cx="481" cy="817" r="16" fill="#FFF6DC" opacity="0.7" stroke="none"/>
+      </g>
+      <path d="M168 730c190 40 474 40 664 0" fill="none" stroke="#FFF6DC" stroke-width="10" opacity="0.5"/>
 
       <!-- face: white sclera, coloured iris carrying the session, glossy
            highlights over the pupil edge, brows above. The iris moves inside

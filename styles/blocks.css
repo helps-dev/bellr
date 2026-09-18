@@ -528,7 +528,7 @@
    ========================================================================== */
 
 .t-swing, .t-drift, .t-squash, .t-striker,
-.t-arm-l, .t-arm-r, .t-lid, .t-mouth { will-change: transform; }
+.t-arm-l, .t-arm-r, .t-lid, .t-mouth, .t-cape, .t-clapper { will-change: transform; }
 
 /* ---- idle -----------------------------------------------------------------
    Two sways at periods that do not divide into each other, so the composite
@@ -544,6 +544,14 @@
 .t-arm-r { animation: lagR 5.3s cubic-bezier(.45,0,.55,1) infinite; animation-delay: -.3s; transform-origin: 742px 524px; }
 @keyframes lagL { 0%, 100% { transform: rotate(3.4deg); } 50% { transform: rotate(-3.4deg); } }
 @keyframes lagR { 0%, 100% { transform: rotate(-2.8deg); } 50% { transform: rotate(2.8deg); } }
+
+/* The cape rides the same drift as the body, pivoted at the collar, so it
+   billows a beat behind instead of moving with the bell as one stiff piece. */
+.t-cape { animation: drift 8.1s cubic-bezier(.4,0,.6,1) infinite; transform-origin: 500px 420px; }
+
+/* The clapper swings on the body's exact period, reversed — the classic
+   counter-swing of a real clapper against its bell. */
+.t-clapper { animation: sway 5.3s cubic-bezier(.45,0,.55,1) infinite reverse; transform-origin: 500px 730px; }
 
 @keyframes hang { 0%, 100% { transform: translateX(13px) rotate(2deg); } 50% { transform: translateX(-13px) rotate(-2deg); } }
 
@@ -615,9 +623,12 @@
 }
 .tolly.is-ringing .t-lid { animation: none; transform: translateY(0); }
 
+/* The clapper flails against the ring, opposite phase to the body. */
+.tolly.is-ringing .t-clapper { animation: ringOut 1100ms 130ms cubic-bezier(.2,.8,.3,1) both reverse; transform-origin: 500px 730px; }
+
 @media (prefers-reduced-motion: reduce) {
   .t-swing, .t-drift, .t-squash, .t-striker, .t-arm-l, .t-arm-r,
-  .t-lid, .t-mouth { animation: none !important; }
+  .t-lid, .t-mouth, .t-cape, .t-clapper { animation: none !important; }
 }
 
 /* ==========================================================================
