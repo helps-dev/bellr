@@ -2,6 +2,33 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<script>
+/* Refuse to render inside a frame.
+   This page has a Connect wallet button and an Arm the pool button, so being
+   framed is not a cosmetic problem: an attacker can lay an invisible copy of
+   this page over their own and have someone sign a transaction they cannot
+   see. The proper fix is an X-Frame-Options or CSP frame-ancestors header, but
+   GitHub Pages serves no custom headers at all — `_headers` and `vercel.json`
+   sit in the repo doing nothing there. Until this moves to a host that sends
+   them, this is the protection.
+   CSP frame-ancestors cannot be set from a meta tag, so script is the only
+   in-page option. */
+(function () {
+  try {
+    if (window.top === window.self) return;
+  } catch (e) {
+    /* Cross-origin parent throws on access, which itself means we are framed. */
+  }
+  document.documentElement.innerHTML =
+    '<body style="margin:0;display:grid;place-items:center;height:100vh;' +
+    'background:#F2EDE1;color:#0B0B0D;font:600 16px/1.6 system-ui,sans-serif;' +
+    'text-align:center;padding:24px">' +
+    '<div><p style="font-size:22px;margin:0 0 12px">BELLR cannot be shown inside another site.</p>' +
+    '<p style="margin:0;font-weight:500;color:#57544C">You are being asked to sign transactions, so open it directly:</p>' +
+    '<p style="margin:16px 0 0"><a href="https://bellr.fun/" style="color:#0B0B0D">bellr.fun</a></p></div></body>';
+  try { window.top.location = window.self.location; } catch (e) { /* blocked; the page is already blanked */ }
+})();
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>BELLR — liquidity that knows the market closed</title>
 <meta name="description" content="Uniswap v4 hooks for stock-paired pools on Robinhood Chain. When the bell rings, the pool changes its own rules.">
