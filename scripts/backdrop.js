@@ -92,6 +92,9 @@ export function initBackdrop() {
 
   /** Lay dye down the segment the pointer just travelled, not only at its tip. */
   function inject(x0, y0, x1, y1, speed, strength) {
+    // Belt and braces: one non-finite coordinate anywhere upstream would throw
+    // inside createRadialGradient and kill the loop for the rest of the visit.
+    if (![x0, y0, x1, y1, speed].every(Number.isFinite)) return;
     const steps = Math.min(14, 1 + Math.floor(speed / 3));
     const [r, g, b] = rgb.map(Math.round);
     const radius = (8 + Math.min(17, speed * 0.38)) * (strength ?? 1);
@@ -200,8 +203,12 @@ export function initBackdrop() {
   }, { passive: true });
 
   window.addEventListener('pointermove', e => {
-    ptr.x = (e.clientX / window.innerWidth) * dw;
-    ptr.y = (e.clientY / window.innerHeight) * dh;
+    // A viewport can report zero height — a collapsed pane, a hidden iframe, a
+    // phone mid-rotation. Dividing by it gives Infinity, and Infinity minus
+    // Infinity is NaN, which makes createRadialGradient throw and takes the
+    // whole animation loop down with it. Clamp the divisor instead.
+    ptr.x = (e.clientX / Math.max(1, window.innerWidth)) * dw;
+    ptr.y = (e.clientY / Math.max(1, window.innerHeight)) * dh;
     ptr.active = true;
   }, { passive: true });
 
