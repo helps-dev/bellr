@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="Bellr mark">
+  <!-- One colour, for stamps, screen print, embroidery and anywhere the brass
+       cannot survive. The candles are knocked out rather than filled. -->
+  <defs>
+    <clipPath id="bellr-bell-m"><path d="M128 48c48 0 71 35 71 85v27l19 29H38l19-29v-27c0-50 23-85 71-85z"/></clipPath>
+    <mask id="bellr-knock">
+      <rect width="256" height="256" fill="#000"/>
+      <path d="M128 48c48 0 71 35 71 85v27l19 29H38l19-29v-27c0-50 23-85 71-85z" fill="#fff"/>
+      <rect x="76"  y="146" width="32" height="54"  fill="#000"/>
+      <rect x="116" y="100" width="32" height="100" fill="#000"/>
+      <rect x="156" y="130" width="32" height="70"  fill="#000"/>
+    </mask>
+  </defs>
+  <circle cx="128" cy="28" r="16" fill="none" stroke="currentColor" stroke-width="14"/>
+  <path d="M128 48c48 0 71 35 71 85v27l19 29H38l19-29v-27c0-50 23-85 71-85z" fill="currentColor" mask="url(#bellr-knock)"/>
+  <path d="M128 48c48 0 71 35 71 85v27l19 29H38l19-29v-27c0-50 23-85 71-85z" fill="none" stroke="currentColor" stroke-width="14" stroke-linejoin="round"/>
+</svg>

@@ -228,31 +228,101 @@
 }
 
 /* ---- connect chooser ------------------------------------------------------
-   Shown only when there is more than one way in. Deliberately plain: the
-   wallet's own approval screen is the thing people should be reading, and a
-   chooser that tries to be a product gets in the way of that. */
+   The pattern people already know from other apps: a dark centred card, a
+   search field, one row per wallet with its icon and badge. Deliberately not
+   the site's bone-and-ink blocks — this card belongs to the wallet moment,
+   and looking like every other wallet modal is what makes it trustworthy. */
 .connect {
   position: fixed; inset: 0; z-index: 90;
   display: grid; place-items: center;
   padding: var(--gutter, 1rem);
-  background: rgba(11, 11, 13, .55);
-  backdrop-filter: blur(3px);
+  background: rgba(4, 4, 6, .62);
+  backdrop-filter: blur(6px);
 }
 .connect__box {
-  width: min(24rem, 100%);
-  padding: 1.5rem;
-  background: var(--paper); color: var(--fg);
-  border: 3px solid var(--ink); border-radius: var(--r-md);
-  box-shadow: 0 10px 0 var(--ink);
+  width: min(25rem, 100%);
+  padding: 1.25rem;
+  background: #141419; color: var(--bone);
+  border: 1px solid rgba(242, 237, 225, .09);
+  border-radius: 18px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, .5);
 }
-.connect__list { display: grid; gap: .6rem; margin: 1rem 0 1.25rem; }
+.connect__head {
+  position: relative;
+  display: grid; place-items: center;
+  padding: .25rem 0 1rem;
+}
+.connect__title { font-family: var(--font-body); font-size: .9375rem; font-weight: 600; letter-spacing: .01em; }
+.connect__close {
+  position: absolute; right: 0; top: 50%; translate: 0 -50%;
+  display: grid; place-items: center;
+  width: 1.75rem; height: 1.75rem;
+  background: none; border: 0; border-radius: 8px;
+  color: rgba(242, 237, 225, .55); cursor: pointer;
+}
+.connect__close:hover, .connect__close:focus-visible { background: rgba(255, 255, 255, .08); color: var(--bone); outline: none; }
+.connect__close svg { width: 1rem; height: 1rem; }
+
+.connect__search {
+  display: flex; align-items: center; gap: .6rem;
+  padding: 0 .85rem;
+  background: rgba(255, 255, 255, .05);
+  border: 1px solid rgba(242, 237, 225, .08);
+  border-radius: 12px;
+  color: rgba(242, 237, 225, .45);
+}
+.connect__search:focus-within { border-color: rgba(255, 197, 61, .55); color: rgba(242, 237, 225, .7); }
+.connect__search svg { width: 1rem; height: 1rem; flex: none; }
+.connect__search input {
+  flex: 1; min-width: 0;
+  padding: .7rem 0;
+  background: none; border: 0; outline: none;
+  color: var(--bone);
+  font: inherit; font-size: .875rem;
+}
+.connect__search input::placeholder { color: rgba(242, 237, 225, .38); }
+
+.connect__list { display: grid; gap: .5rem; margin: .9rem 0 .25rem; }
 .connect__opt {
-  display: block; width: 100%; text-align: left; cursor: pointer;
-  padding: .9rem 1rem;
-  background: var(--bone); color: var(--fg);
-  border: 3px solid var(--ink); border-radius: var(--r-sm);
+  display: flex; align-items: center; gap: .8rem;
+  width: 100%; padding: .65rem .85rem;
+  background: rgba(255, 255, 255, .045);
+  border: 1px solid transparent; border-radius: 12px;
+  color: var(--bone); cursor: pointer;
+  font: inherit; text-align: left;
 }
-.connect__opt:hover, .connect__opt:focus-visible { background: var(--brass); outline: none; }
-.connect__opt b { display: block; font-family: var(--font-mono); font-size: .8125rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
-.connect__opt span { display: block; margin-top: .25rem; font-size: .8125rem; color: var(--fg-muted); }
-.connect__cancel { width: 100%; }
+.connect__opt:hover, .connect__opt:focus-visible { background: rgba(255, 255, 255, .09); outline: none; }
+.connect__opt:focus-visible { border-color: rgba(255, 197, 61, .55); }
+.connect__icon {
+  width: 28px; height: 28px; flex: none;
+  border-radius: 8px;
+  display: grid; place-items: center;
+}
+.connect__icon--letter {
+  background: var(--brass); color: var(--ink);
+  font-family: var(--font-mono); font-size: .8125rem; font-weight: 700; text-transform: uppercase;
+}
+.connect__icon--svg { background: rgba(255, 255, 255, .07); color: #3B99FC; }
+.connect__icon--svg svg { width: 18px; height: 18px; }
+.connect__name { flex: 1; font-size: .9rem; font-weight: 550; letter-spacing: .01em; }
+.connect__badge {
+  display: inline-flex; align-items: center; gap: .35rem;
+  font-size: .72rem; font-weight: 500;
+  color: rgba(242, 237, 225, .5);
+}
+.connect__badge i { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+.connect__badge--last { color: var(--brass); }
+.connect__chevron { color: rgba(242, 237, 225, .35); display: grid; place-items: center; }
+.connect__chevron svg { width: 1rem; height: 1rem; }
+
+.connect__empty {
+  margin: .25rem 0; padding: 1rem 0;
+  text-align: center; font-size: .85rem;
+  color: rgba(242, 237, 225, .45);
+}
+.connect__foot {
+  margin: .9rem 0 .1rem;
+  text-align: center;
+  font-family: var(--font-mono); font-size: .68rem; letter-spacing: .06em;
+  color: rgba(242, 237, 225, .35);
+}

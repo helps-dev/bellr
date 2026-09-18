@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="Bellr mark">
+  <!-- For dark grounds: the outline flips to bone so the silhouette survives. -->
+  <defs><clipPath id="bellr-bell-d"><path d="M128 48c48 0 71 35 71 85v27l19 29H38l19-29v-27c0-50 23-85 71-85z"/></clipPath></defs>
+  <circle cx="128" cy="28" r="16" fill="none" stroke="#F2EDE1" stroke-width="14"/>
+  <g clip-path="url(#bellr-bell-d)">
+    <rect width="256" height="256" fill="#FFC53D"/>
+    <rect x="76"  y="146" width="32" height="54"  fill="#0B0B0D"/>
+    <rect x="116" y="100" width="32" height="100" fill="#00E06B"/>
+    <rect x="156" y="130" width="32" height="70"  fill="#0B0B0D"/>
+  </g>
+  <path d="M128 48c48 0 71 35 71 85v27l19 29H38l19-29v-27c0-50 23-85 71-85z" fill="none" stroke="#F2EDE1" stroke-width="14" stroke-linejoin="round"/>
+</svg>

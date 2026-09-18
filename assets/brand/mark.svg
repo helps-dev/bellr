@@ -1,29 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="Bellr mark">
-  <defs>
-    <linearGradient id="brass" x1="0.15" y1="0" x2="0.85" y2="1">
-      <stop offset="0" stop-color="#FFD87A"/>
-      <stop offset="0.45" stop-color="#FFB43D"/>
-      <stop offset="1" stop-color="#C87A08"/>
-    </linearGradient>
-    <linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.35"/>
-      <stop offset="0.55" stop-color="#FFFFFF" stop-opacity="0"/>
-    </linearGradient>
-  </defs>
+  <!-- The bell is the session; the candles inside it are what trades during one.
+       The green candle is the live bar. Flat by construction: no gradient, no
+       gloss, nothing that stops it reading at favicon size. -->
+  <defs><clipPath id="bellr-bell"><path d="M128 48c48 0 71 35 71 85v27l19 29H38l19-29v-27c0-50 23-85 71-85z"/></clipPath></defs>
 
-  <!-- crown -->
-  <circle cx="128" cy="34" r="14" fill="url(#brass)"/>
-  <rect x="120" y="40" width="16" height="14" rx="6" fill="url(#brass)"/>
+  <circle cx="128" cy="28" r="16" fill="none" stroke="#0B0B0D" stroke-width="14"/>
 
-  <!-- bell body -->
-  <path d="M128 50c48 0 72 34 72 84v26l18 28H38l18-28v-26c0-50 24-84 72-84z" fill="url(#brass)"/>
-  <path d="M128 50c48 0 72 34 72 84v26l18 28H38l18-28v-26c0-50 24-84 72-84z" fill="url(#sheen)"/>
+  <g clip-path="url(#bellr-bell)">
+    <rect width="256" height="256" fill="#FFC53D"/>
+    <rect x="76"  y="146" width="32" height="54"  fill="#0B0B0D"/>
+    <rect x="116" y="100" width="32" height="100" fill="#00E06B"/>
+    <rect x="156" y="130" width="32" height="70"  fill="#0B0B0D"/>
+  </g>
 
-  <!-- the session line: a price level cut straight through the bell -->
-  <rect x="38" y="150" width="180" height="13" rx="6.5" fill="#0A0D13"/>
-  <rect x="52" y="153" width="60" height="7" rx="3.5" fill="#3BE08A"/>
-  <rect x="120" y="153" width="84" height="7" rx="3.5" fill="#FF6B6B"/>
-
-  <!-- clapper -->
-  <ellipse cx="128" cy="210" rx="19" ry="16" fill="url(#brass)"/>
+  <path d="M128 48c48 0 71 35 71 85v27l19 29H38l19-29v-27c0-50 23-85 71-85z" fill="none" stroke="#0B0B0D" stroke-width="14" stroke-linejoin="round"/>
 </svg>

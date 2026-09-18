@@ -1,12 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="64" height="64">
-  <defs>
-    <linearGradient id="f" x1="0.15" y1="0" x2="0.85" y2="1">
-      <stop offset="0" stop-color="#FFD87A"/><stop offset="0.45" stop-color="#FFB43D"/><stop offset="1" stop-color="#C87A08"/>
-    </linearGradient>
-  </defs>
-  <rect width="256" height="256" rx="56" fill="#0A0D13"/>
-  <circle cx="128" cy="56" r="12" fill="url(#f)"/>
-  <path d="M128 68c40 0 60 28 60 70v22l15 24H53l15-24v-22c0-42 20-70 60-70z" fill="url(#f)"/>
-  <rect x="53" y="158" width="150" height="12" rx="6" fill="#0A0D13"/>
-  <ellipse cx="128" cy="208" rx="16" ry="13" fill="url(#f)"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- Favicon: a touch heavier than the full mark so it holds at 16px. -->
+  <defs><clipPath id="f"><path d="M128 48c48 0 71 35 71 85v27l19 29H38l19-29v-27c0-50 23-85 71-85z"/></clipPath></defs>
+  <circle cx="128" cy="28" r="16" fill="none" stroke="#0B0B0D" stroke-width="16"/>
+  <g clip-path="url(#f)">
+    <rect width="256" height="256" fill="#FFC53D"/>
+    <rect x="76"  y="146" width="32" height="54"  fill="#0B0B0D"/>
+    <rect x="116" y="100" width="32" height="100" fill="#00E06B"/>
+    <rect x="156" y="130" width="32" height="70"  fill="#0B0B0D"/>
+  </g>
+  <path d="M128 48c48 0 71 35 71 85v27l19 29H38l19-29v-27c0-50 23-85 71-85z" fill="none" stroke="#0B0B0D" stroke-width="16" stroke-linejoin="round"/>
 </svg>

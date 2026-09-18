@@ -19,19 +19,53 @@ export const wallet = { provider: null, account: null, chainId: null, connecting
 function emit() { listeners.forEach(fn => fn({ ...wallet })); }
 export function onWalletChange(fn) { listeners.add(fn); fn({ ...wallet }); return () => listeners.delete(fn); }
 
+/* ---- EIP-6963: every wallet introduces itself ---------------------------- */
+
+const announced = new Map(); // uuid -> { info: {uuid,name,icon,rdns}, provider }
+if (typeof window !== 'undefined') {
+  window.addEventListener('eip6963:announceProvider', e => {
+    if (e.detail?.info?.uuid) announced.set(e.detail.info.uuid, e.detail);
+  });
+  window.dispatchEvent(new Event('eip6963:requestProvider'));
+}
+
+/** A display name for a pre-6963 injected provider, from its own flags. */
+function legacyName(p) {
+  if (p.isPhantom) return 'Phantom';
+  if (p.isMetaMask) return 'MetaMask';
+  if (p.isRabby) return 'Rabby';
+  if (p.isCoinbaseWallet) return 'Coinbase Wallet';
+  if (p.isOkxWallet || p.isOKExWallet) return 'OKX Wallet';
+  if (p.isBraveWallet) return 'Brave Wallet';
+  return 'Browser wallet';
+}
+
+/**
+ * The wallets this browser actually has, newest announcement last.
+ * Falls back to the injected singleton(s) when a wallet predates 6963.
+ */
+export function detectedWallets() {
+  if (announced.size) return [...announced.values()];
+  const eth = window.ethereum;
+  if (!eth) return [];
+  const list = eth.providers?.length ? eth.providers : [eth];
+  return list.map((p, i) => ({
+    info: { uuid: `legacy-${i}-${legacyName(p)}`, name: legacyName(p), icon: null },
+    provider: p,
+  }));
+}
+
 /** EIP-6963 announces providers; fall back to the injected singleton. */
 function detect() {
   // Once a provider is chosen — injected or WalletConnect — every later call
   // has to keep using it. Falling back to window.ethereum here would quietly
   // send a WalletConnect user's transaction to a different wallet.
   if (wallet.provider) return wallet.provider;
-  const eth = window.ethereum;
-  if (!eth) return null;
-  // With several wallets installed, prefer the one the user set as default.
-  const picked = eth.providers?.find(p => p.isMetaMask) ?? eth.providers?.[0] ?? eth;
-  wallet.provider = picked;
-  bind(picked);
-  return picked;
+  const first = detectedWallets()[0];
+  if (!first) return null;
+  wallet.provider = first.provider;
+  bind(first.provider);
+  return first.provider;
 }
 
 let bound = false;
@@ -100,12 +134,15 @@ export async function connectWalletConnect() {
 }
 export function isRightChain() { return wallet.chainId?.toLowerCase() === TARGET.chainId.toLowerCase(); }
 
-export async function connect() {
-  const p = detect();
+export async function connect(provider) {
+  // A chooser pick hands its provider in; without one, take the first detected.
+  const p = provider ?? detect();
   if (!p) throw new Error('No EVM wallet found. Install one, then reload.');
   if (wallet.connecting) return wallet;
   wallet.connecting = true; emit();
   try {
+    wallet.provider = p;
+    bind(p);
     const accounts = await p.request({ method: 'eth_requestAccounts' });
     kind = 'injected';
     wallet.account = accounts?.[0] ?? null;
@@ -123,7 +160,7 @@ export async function connect() {
  * library would have to be downloaded on every page load to do it.
  */
 export async function restore() {
-  if (!window.ethereum) return;
+  if (!window.ethereum && !announced.size) return;
   const p = detect();
   if (!p) return;
   try {
