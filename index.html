@@ -5,28 +5,44 @@
 <script>
 /* Refuse to render inside a frame.
    This page has a Connect wallet button and an Arm the pool button, so being
-   framed is not a cosmetic problem: an attacker can lay an invisible copy of
-   this page over their own and have someone sign a transaction they cannot
-   see. The proper fix is an X-Frame-Options or CSP frame-ancestors header, but
-   GitHub Pages serves no custom headers at all — `_headers` and `vercel.json`
-   sit in the repo doing nothing there. Until this moves to a host that sends
-   them, this is the protection.
-   CSP frame-ancestors cannot be set from a meta tag, so script is the only
-   in-page option. */
+   framed is not cosmetic: an attacker can lay an invisible copy over their own
+   page and have someone sign a transaction they cannot see. The proper fix is
+   an X-Frame-Options or CSP frame-ancestors header, but GitHub Pages sends no
+   custom headers at all, and frame-ancestors cannot come from a meta tag — so
+   script is the only option here.
+
+   Hide first, explain later. Rewriting the document from inside <head> does
+   not work: the parser simply carries on and puts the real page back. Hiding
+   the root element takes effect immediately and survives the rest of the
+   parse, and the message goes in once there is a body to put it in. */
 (function () {
-  try {
-    if (window.top === window.self) return;
-  } catch (e) {
-    /* Cross-origin parent throws on access, which itself means we are framed. */
+  var framed;
+  try { framed = window.top !== window.self; }
+  catch (e) { framed = true; }   /* a cross-origin parent throws, which answers it */
+  if (!framed) return;
+
+  var root = document.documentElement;
+  root.style.display = 'none';
+
+  function explain() {
+    document.body.innerHTML =
+      '<div style="display:grid;place-items:center;min-height:100vh;' +
+      'background:#F2EDE1;color:#0B0B0D;font:600 16px/1.6 system-ui,sans-serif;' +
+      'text-align:center;padding:24px">' +
+      '<div><p style="font-size:22px;margin:0 0 12px">BELLR cannot be shown inside another site.</p>' +
+      '<p style="margin:0;font-weight:500;color:#57544C">You would be signing transactions you cannot see.</p>' +
+      '<p style="margin:16px 0 0"><a href="https://bellr.fun/" target="_top" style="color:#0B0B0D">Open bellr.fun directly</a></p>' +
+      '</div></div>';
+    root.style.display = '';
   }
-  document.documentElement.innerHTML =
-    '<body style="margin:0;display:grid;place-items:center;height:100vh;' +
-    'background:#F2EDE1;color:#0B0B0D;font:600 16px/1.6 system-ui,sans-serif;' +
-    'text-align:center;padding:24px">' +
-    '<div><p style="font-size:22px;margin:0 0 12px">BELLR cannot be shown inside another site.</p>' +
-    '<p style="margin:0;font-weight:500;color:#57544C">You are being asked to sign transactions, so open it directly:</p>' +
-    '<p style="margin:16px 0 0"><a href="https://bellr.fun/" style="color:#0B0B0D">bellr.fun</a></p></div></body>';
-  try { window.top.location = window.self.location; } catch (e) { /* blocked; the page is already blanked */ }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', explain);
+  } else {
+    explain();
+  }
+
+  try { window.top.location = window.self.location; } catch (e) { /* blocked; the page stays hidden */ }
 })();
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
