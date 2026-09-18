@@ -91,7 +91,14 @@ export function initMascotEyes() {
     raf = requestAnimationFrame(frame);
   }
 
-  function start() { if (!raf) { last = 0; raf = requestAnimationFrame(frame); } }
+  /* Scrolled past the mascot, there is nothing to animate. Without this the
+     loop keeps writing SVG transforms sixty times a second to something nobody
+     can see — each write invalidating style for that subtree — for the whole
+     rest of the page. The backdrop already parks itself on scroll; this is the
+     other half of that. */
+  let onScreen = true;
+
+  function start() { if (!raf && onScreen) { last = 0; raf = requestAnimationFrame(frame); } }
   function stop() { cancelAnimationFrame(raf); raf = 0; }
 
   function release() {
@@ -112,6 +119,14 @@ export function initMascotEyes() {
   document.addEventListener('pointerleave', release);
   window.addEventListener('blur', release);
   document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
+
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([entry]) => {
+      onScreen = entry.isIntersecting;
+      if (!onScreen) stop();
+      else if (svg.classList.contains('is-awake')) start();
+    }, { rootMargin: '120px' }).observe(svg);
+  }
 
   for (const look of looks) look.setAttribute('transform', 'translate(0 0)');
   tilt.setAttribute('transform', 'translate(0 0) rotate(0 500 140)');
