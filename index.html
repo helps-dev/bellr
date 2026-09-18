@@ -154,20 +154,15 @@
       <stop offset="0" stop-color="#F2B524"/>
       <stop offset="1" stop-color="#96600A"/>
     </linearGradient>
-    <linearGradient id="h-tGlass" x1="0.28" y1="0" x2="0.72" y2="1">
-      <stop offset="0" stop-color="#2E353E"/>
-      <stop offset="0.5" stop-color="#151A20"/>
-      <stop offset="1" stop-color="#080A0D"/>
-    </linearGradient>
     <radialGradient id="h-tIrisShade" cx="0.62" cy="0.3" r="0.95">
       <stop offset="0"    stop-color="#FFFFFF" stop-opacity="0.34"/>
       <stop offset="0.42" stop-color="#000000" stop-opacity="0"/>
       <stop offset="1"    stop-color="#000000" stop-opacity="0.62"/>
     </radialGradient>
-    <clipPath id="h-tEyeL"><circle cx="378" cy="416" r="100"/></clipPath>
-    <clipPath id="h-tEyeR"><circle cx="622" cy="416" r="100"/></clipPath>
+    <clipPath id="h-tEyeL"><circle cx="378" cy="480" r="118"/></clipPath>
+    <clipPath id="h-tEyeR"><circle cx="622" cy="480" r="118"/></clipPath>
     <clipPath id="h-tClipBell">
-      <path d="M500 150c142 0 232 106 250 296 11 120 53 210 92 266H158c39-56 81-146 92-266 18-190 108-296 250-296z"/>
+      <path d="M500 296c140 0 240 84 262 204 14 80 38 160 74 220H164c36-60 60-140 74-220 22-120 122-204 262-204z"/>
     </clipPath>
     <linearGradient id="h-tThroat" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0"    stop-color="#160A0D"/>
@@ -178,7 +173,7 @@
       <stop offset="0" stop-color="#C9463F"/>
       <stop offset="1" stop-color="#EE7E75"/>
     </linearGradient>
-    <clipPath id="h-tMouth"><path d="M420 548q80 30 160 0 16 82-80 100-96-18-80-100z"/></clipPath>
+    <clipPath id="h-tMouth"><path d="M402 622q98 34 196 0 14 86-98 104-112-18-98-104z"/></clipPath>
     <linearGradient id="h-tCape" x1="0" y1="0" x2="0.4" y2="1">
       <stop offset="0"   stop-color="#0E8A4F"/>
       <stop offset="0.5" stop-color="#0A5C36"/>
@@ -196,7 +191,7 @@
 
   <g stroke="#0B0B0D" stroke-width="14" stroke-linejoin="round" stroke-linecap="round">
 
-    <ellipse cx="500" cy="916" rx="306" ry="32" fill="#0B0B0D" opacity="0.14" stroke="none"/>
+    <ellipse cx="500" cy="924" rx="316" ry="32" fill="#0B0B0D" opacity="0.14" stroke="none"/>
 
     <g class="t-tilt">
     <g class="t-drift">
@@ -207,131 +202,131 @@
            body and arms always sit in front of it. The hem ends in points,
            the way a cape reads "moving" even in a still. -->
       <g class="t-cape">
-        <path d="M340 370C214 382 104 478 68 626c-22 98-24 180 6 242l54-62 34 102 56-74 44 98c36-48 52-116 54-192 2-92-2-206 24-362z" fill="url(#h-tCape)"/>
-        <path d="M660 370c126 12 236 108 272 256 22 98 24 180-6 242l-54-62-34 102-56-74-44 98c-36-48-52-116-54-192-2-92 2-206-24-362z" fill="url(#h-tCape)"/>
+        <path d="M336 420C210 436 106 528 70 668c-20 92-20 168 10 228l52-60 32 96 56-72 42 94c34-46 50-112 52-186 2-88 0-196 22-528z" fill="url(#h-tCape)"/>
+        <path d="M664 420c132 8 238 96 282 238 26 86 24 168-8 232l-54-60-32 100-58-74-42 96c-36-48-52-116-54-192-2-92 4-200-34-400z" fill="url(#h-tCape)"/>
         <!-- inner folds, the bright lining catching light -->
-        <path d="M290 460c-60 50-96 132-108 228M306 540c-44 60-68 138-74 214" fill="none" stroke="#00E06B" stroke-width="12" stroke-opacity="0.55"/>
-        <path d="M710 460c60 50 96 132 108 228M694 540c44 60 68 138 74 214" fill="none" stroke="#00E06B" stroke-width="12" stroke-opacity="0.55"/>
+        <path d="M286 506c-56 52-90 134-100 226M302 584c-40 60-62 136-66 210" fill="none" stroke="#00E06B" stroke-width="12" stroke-opacity="0.55"/>
+        <path d="M716 500c62 44 104 122 122 216M700 584c46 58 72 134 80 208" fill="none" stroke="#00E06B" stroke-width="12" stroke-opacity="0.55"/>
       </g>
 
-      <!-- crown loop -->
-      <path d="M500 22a64 64 0 0 1 64 64v66h-42V86a22 22 0 0 0-44 0v66h-42V86a64 64 0 0 1 64-64z" fill="url(#h-tDark)"/>
+      <!-- crown ring: a round hanging loop, glossy like the rest of the metal -->
+      <circle cx="500" cy="208" r="72" fill="url(#h-tRim)"/>
+      <circle cx="500" cy="208" r="34" fill="#0B0B0D"/>
+      <circle cx="500" cy="208" r="34" fill="none" stroke="#8A5806" stroke-width="8"/>
+      <ellipse cx="472" cy="176" rx="20" ry="12" fill="#FFF6DC" opacity="0.75" stroke="none" transform="rotate(-32 472 176)"/>
+      <path d="M470 266h60v36h-60z" fill="url(#h-tDark)"/>
 
-      <!-- left arm, resting: white cartoon glove on a brass wrist -->
+      <!-- left arm, fist pumped at the hip -->
       <g class="t-arm-l">
-        <path d="M262 546 L128 624" stroke="#0B0B0D" stroke-width="104" fill="none"/>
-        <path d="M262 546 L128 624" stroke="url(#h-tDark)" stroke-width="74" fill="none"/>
-        <circle cx="104" cy="646" r="74" fill="url(#h-tGlove)"/>
-        <path d="M62 604q-8-30 16-40M94 590q-2-32 24-36M128 594q4-30 28-30" fill="none" stroke="#0B0B0D" stroke-width="10"/>
-        <ellipse cx="42" cy="680" rx="27" ry="36" fill="url(#h-tGlove)" transform="rotate(-32 42 680)"/>
+        <path d="M262 546 L136 630" stroke="#0B0B0D" stroke-width="104" fill="none"/>
+        <path d="M262 546 L136 630" stroke="url(#h-tDark)" stroke-width="74" fill="none"/>
+        <circle cx="110" cy="652" r="76" fill="url(#h-tGlove)"/>
+        <path d="M68 608q-8-30 16-40M100 594q-2-32 24-36M134 600q4-30 28-30" fill="none" stroke="#0B0B0D" stroke-width="10"/>
+        <ellipse cx="46" cy="688" rx="28" ry="37" fill="url(#h-tGlove)" transform="rotate(-32 46 688)"/>
       </g>
 
-      <!-- right arm raised, glove gripping the mallet: the bell that rings itself -->
+      <!-- right arm high, glove gripping the mallet: the bell that rings itself -->
       <g class="t-arm-r">
-        <path d="M742 524 L872 342" stroke="#0B0B0D" stroke-width="104" fill="none"/>
-        <path d="M742 524 L872 342" stroke="url(#h-tDark)" stroke-width="74" fill="none"/>
+        <path d="M742 524 L868 340" stroke="#0B0B0D" stroke-width="104" fill="none"/>
+        <path d="M742 524 L868 340" stroke="url(#h-tDark)" stroke-width="74" fill="none"/>
         <g class="t-striker">
-          <path d="M878 292 L786 178" stroke="#0B0B0D" stroke-width="34" fill="none"/>
-          <path d="M878 292 L786 178" stroke="url(#h-tWood)" stroke-width="20" fill="none"/>
-          <circle cx="770" cy="160" r="58" fill="url(#h-tRim)"/>
-          <circle cx="752" cy="140" r="17" fill="#FFF6DC" opacity="0.7" stroke="none"/>
+          <path d="M878 292 L852 168" stroke="#0B0B0D" stroke-width="34" fill="none"/>
+          <path d="M878 292 L852 168" stroke="url(#h-tWood)" stroke-width="20" fill="none"/>
+          <circle cx="846" cy="136" r="62" fill="url(#h-tRim)"/>
+          <circle cx="826" cy="114" r="18" fill="#FFF6DC" opacity="0.75" stroke="none"/>
         </g>
-        <circle cx="890" cy="316" r="74" fill="url(#h-tGlove)"/>
-        <path d="M852 272q-6-30 18-38M884 260q0-32 26-34M916 266q6-28 30-26" fill="none" stroke="#0B0B0D" stroke-width="10"/>
-        <ellipse cx="950" cy="352" rx="27" ry="36" fill="url(#h-tGlove)" transform="rotate(28 950 352)"/>
+        <circle cx="886" cy="312" r="76" fill="url(#h-tGlove)"/>
+        <path d="M848 268q-6-30 18-38M880 256q0-32 26-34M912 262q6-28 30-26" fill="none" stroke="#0B0B0D" stroke-width="10"/>
+        <ellipse cx="948" cy="348" rx="28" ry="37" fill="url(#h-tGlove)" transform="rotate(28 948 348)"/>
       </g>
 
       <!-- grounding: a soft occlusion under the rim instead of a cavity -->
-      <ellipse cx="500" cy="900" rx="316" ry="38" fill="#0B0B0D" opacity="0.2" stroke="none"/>
+      <ellipse cx="500" cy="908" rx="326" ry="38" fill="#0B0B0D" opacity="0.2" stroke="none"/>
 
-      <!-- bell body -->
-      <path d="M500 150c142 0 232 106 250 296 11 120 53 210 92 266H158c39-56 81-146 92-266 18-190 108-296 250-296z" fill="url(#h-tBody)"/>
+      <!-- bell body: squat and round, the face is most of it -->
+      <path d="M500 296c140 0 240 84 262 204 14 80 38 160 74 220H164c36-60 60-140 74-220 22-120 122-204 262-204z" fill="url(#h-tBody)"/>
       <g clip-path="url(#h-tClipBell)">
-        <ellipse cx="830" cy="470" rx="140" ry="380" fill="#96600A" opacity="0.42" stroke="none"/>
-        <ellipse cx="322" cy="276" rx="98" ry="160" fill="#FFF8D6" opacity="0.62" stroke="none"/>
+        <ellipse cx="836" cy="520" rx="140" ry="330" fill="#96600A" opacity="0.42" stroke="none"/>
+        <ellipse cx="330" cy="380" rx="108" ry="150" fill="#FFF8D6" opacity="0.62" stroke="none"/>
         <!-- narrow specular: what separates polished metal from flat yellow -->
-        <ellipse cx="296" cy="304" rx="25" ry="148" fill="#FFFDF0" opacity="0.7" stroke="none" transform="rotate(-9 296 304)"/>
+        <ellipse cx="300" cy="410" rx="26" ry="140" fill="#FFFDF0" opacity="0.7" stroke="none" transform="rotate(-9 300 410)"/>
         <!-- bounce light climbing the shadow side -->
-        <ellipse cx="798" cy="602" rx="54" ry="150" fill="#FFD98A" opacity="0.28" stroke="none"/>
+        <ellipse cx="800" cy="640" rx="56" ry="140" fill="#FFD98A" opacity="0.28" stroke="none"/>
         <!-- sound bow: real bells thicken and darken just above the rim -->
-        <path d="M150 650h700v44H150z" fill="#8A5806" opacity="0.28"/>
+        <path d="M156 668h688v44H156z" fill="#8A5806" opacity="0.28"/>
         <!-- cast rings around the crown -->
-        <path d="M288 210h424M274 242h452" stroke="#8A5806" stroke-opacity="0.4" stroke-width="9"/>
-        <path d="M288 218h424M274 250h452" stroke="#FFF3C4" stroke-opacity="0.38" stroke-width="6"/>
+        <path d="M320 352h360M306 384h388" stroke="#8A5806" stroke-opacity="0.4" stroke-width="9"/>
+        <path d="M320 360h360M306 392h388" stroke="#FFF3C4" stroke-opacity="0.38" stroke-width="6"/>
       </g>
 
       <!-- flared lip, the mouth of the bell, and the clapper inside it -->
-      <path d="M158 698c84 10 600 10 684 0 22 34 36 62 42 88-184 50-584 50-768 0 6-26 20-54 42-88z" fill="url(#h-tRim)"/>
-      <ellipse cx="500" cy="800" rx="376" ry="50" fill="#241302"/>
-      <ellipse cx="500" cy="792" rx="344" ry="39" fill="#120904"/>
+      <path d="M164 716c88 10 584 10 672 0 24 34 40 62 48 88-192 52-576 52-768 0 8-26 24-54 48-88z" fill="url(#h-tRim)"/>
+      <ellipse cx="500" cy="806" rx="384" ry="52" fill="#241302"/>
+      <ellipse cx="500" cy="798" rx="352" ry="40" fill="#120904"/>
       <g class="t-clapper">
-        <path d="M500 706v92" stroke="#0B0B0D" stroke-width="32" fill="none"/>
-        <path d="M500 706v92" stroke="url(#h-tDark)" stroke-width="18" fill="none"/>
-        <circle cx="500" cy="838" r="58" fill="url(#h-tRim)"/>
-        <circle cx="481" cy="817" r="16" fill="#FFF6DC" opacity="0.7" stroke="none"/>
+        <path d="M500 712v94" stroke="#0B0B0D" stroke-width="32" fill="none"/>
+        <path d="M500 712v94" stroke="url(#h-tDark)" stroke-width="18" fill="none"/>
+        <circle cx="500" cy="846" r="60" fill="url(#h-tRim)"/>
+        <circle cx="480" cy="824" r="17" fill="#FFF6DC" opacity="0.7" stroke="none"/>
       </g>
-      <path d="M168 730c190 40 474 40 664 0" fill="none" stroke="#FFF6DC" stroke-width="10" opacity="0.5"/>
+      <path d="M176 748c196 42 452 42 648 0" fill="none" stroke="#FFF6DC" stroke-width="10" opacity="0.5"/>
 
-      <!-- face: white sclera, coloured iris carrying the session, glossy
-           highlights over the pupil edge, brows above. The iris moves inside
-           the eye when the cursor does, not the whole face. -->
+      <!-- face: huge cartoon eyes, white sclera, the iris carrying the
+           session colour. The iris moves inside the eye when the cursor
+           does, not the whole face. -->
       <g class="t-eyes">
           <g class="t-eye">
-            <circle cx="378" cy="416" r="100" fill="#FBF8F1" stroke="none"/>
+            <circle cx="378" cy="480" r="118" fill="#FBF8F1" stroke="none"/>
             <g clip-path="url(#h-tEyeL)">
-              <circle cx="378" cy="416" r="100" fill="#C6D2D6" stroke="none"/>
-              <circle cx="378" cy="429" r="100" fill="#FDFBF6" stroke="none"/>
+              <circle cx="378" cy="480" r="118" fill="#C6D2D6" stroke="none"/>
+              <circle cx="378" cy="494" r="118" fill="#FDFBF6" stroke="none"/>
               <g class="t-look">
-                <circle class="t-iris" cx="378" cy="414" r="59" stroke="none"/>
-                <circle cx="378" cy="414" r="59" fill="url(#h-tIrisShade)" stroke="none"/>
-                <circle cx="378" cy="414" r="33" fill="#0A0A0C" stroke="none"/>
-                <circle class="t-glint" cx="400" cy="391" r="24" stroke="none"/>
-                <circle class="t-glint t-glint--sm" cx="385" cy="425" r="11" stroke="none"/>
+                <circle class="t-iris" cx="378" cy="478" r="66" stroke="none"/>
+                <circle cx="378" cy="478" r="66" fill="url(#h-tIrisShade)" stroke="none"/>
+                <circle cx="378" cy="478" r="37" fill="#0A0A0C" stroke="none"/>
+                <circle class="t-glint" cx="403" cy="450" r="27" stroke="none"/>
+                <circle class="t-glint t-glint--sm" cx="386" cy="490" r="12" stroke="none"/>
               </g>
-              <circle class="t-lid" cx="378" cy="278" r="116" fill="url(#h-tBody)" stroke="none"/>
+              <circle class="t-lid" cx="378" cy="238" r="134" fill="url(#h-tBody)" stroke="none"/>
             </g>
-            <circle cx="378" cy="416" r="100" fill="none" stroke="#0B0B0D" stroke-width="16"/>
+            <circle cx="378" cy="480" r="118" fill="none" stroke="#0B0B0D" stroke-width="16"/>
           </g>
           <g class="t-eye">
-            <circle cx="622" cy="416" r="100" fill="#FBF8F1" stroke="none"/>
+            <circle cx="622" cy="480" r="118" fill="#FBF8F1" stroke="none"/>
             <g clip-path="url(#h-tEyeR)">
-              <circle cx="622" cy="416" r="100" fill="#C6D2D6" stroke="none"/>
-              <circle cx="622" cy="429" r="100" fill="#FDFBF6" stroke="none"/>
+              <circle cx="622" cy="480" r="118" fill="#C6D2D6" stroke="none"/>
+              <circle cx="622" cy="494" r="118" fill="#FDFBF6" stroke="none"/>
               <g class="t-look">
-                <circle class="t-iris" cx="622" cy="414" r="59" stroke="none"/>
-                <circle cx="622" cy="414" r="59" fill="url(#h-tIrisShade)" stroke="none"/>
-                <circle cx="622" cy="414" r="33" fill="#0A0A0C" stroke="none"/>
-                <circle class="t-glint" cx="644" cy="391" r="24" stroke="none"/>
-                <circle class="t-glint t-glint--sm" cx="629" cy="425" r="11" stroke="none"/>
+                <circle class="t-iris" cx="622" cy="478" r="66" stroke="none"/>
+                <circle cx="622" cy="478" r="66" fill="url(#h-tIrisShade)" stroke="none"/>
+                <circle cx="622" cy="478" r="37" fill="#0A0A0C" stroke="none"/>
+                <circle class="t-glint" cx="647" cy="450" r="27" stroke="none"/>
+                <circle class="t-glint t-glint--sm" cx="630" cy="490" r="12" stroke="none"/>
               </g>
-              <circle class="t-lid" cx="622" cy="278" r="116" fill="url(#h-tBody)" stroke="none"/>
+              <circle class="t-lid" cx="622" cy="238" r="134" fill="url(#h-tBody)" stroke="none"/>
             </g>
-            <circle cx="622" cy="416" r="100" fill="none" stroke="#0B0B0D" stroke-width="16"/>
+            <circle cx="622" cy="480" r="118" fill="none" stroke="#0B0B0D" stroke-width="16"/>
           </g>
       </g>
 
-      <!-- brows -->
-      <!-- Arched, not barred. The old brows were thick wedges angled down
-           toward the nose, which reads as a frown however cheerful the
-           mouth is. A thin arc with round caps lifts the whole face. -->
-      <path class="t-brow" d="M296 300 Q378 238 462 284" fill="none" stroke="#0F1A1F" stroke-width="24" stroke-linecap="round"/>
-      <path class="t-brow" d="M704 300 Q622 238 538 284" fill="none" stroke="#0F1A1F" stroke-width="24" stroke-linecap="round"/>
+      <!-- brows: thick, arched high, the left one cocked — the reference
+           expression is a confident grin, not a worried one. -->
+      <path class="t-brow" d="M262 344 Q360 276 470 328" fill="none" stroke="#0F1A1F" stroke-width="30" stroke-linecap="round"/>
+      <path class="t-brow" d="M738 344 Q640 276 530 328" fill="none" stroke="#0F1A1F" stroke-width="30" stroke-linecap="round"/>
 
-      <!-- mouth: a cavity, not a shape. Dark at the back, teeth hugging the
-           top lip, tongue sitting at the front with a centre crease. -->
+      <!-- mouth: a wide open grin. Dark at the back, teeth hugging the top
+           lip, tongue sitting at the front with a centre crease. -->
       <g class="t-mouth">
-        <path d="M420 548q80 30 160 0 16 82-80 100-96-18-80-100z" fill="url(#h-tThroat)" stroke="#0B0B0D" stroke-width="13"/>
+        <path d="M402 622q98 34 196 0 14 86-98 104-112-18-98-104z" fill="url(#h-tThroat)" stroke="#0B0B0D" stroke-width="13"/>
         <g clip-path="url(#h-tMouth)">
-          <path d="M404 532q96 42 192 0v32q-96 30-192 0z" fill="#FDF7EC" stroke="none"/>
-          <path d="M404 564q96 28 192 0" fill="none" stroke="#0B0B0D" stroke-opacity="0.28" stroke-width="7"/>
-          <path d="M500 590q68 0 76 46 6 42-76 46-82-4-76-46 8-46 76-46z" fill="url(#h-tTongue)" stroke="none"/>
-          <path d="M500 598v60" stroke="#A8322C" stroke-opacity="0.45" stroke-width="7" stroke-linecap="round"/>
-          <ellipse cx="450" cy="612" rx="23" ry="10" fill="#FFFFFF" opacity="0.2" stroke="none" transform="rotate(-16 450 612)"/>
+          <path d="M386 606q114 46 228 0v34q-114 32-228 0z" fill="#FDF7EC" stroke="none"/>
+          <path d="M386 640q114 30 228 0" fill="none" stroke="#0B0B0D" stroke-opacity="0.28" stroke-width="7"/>
+          <path d="M500 664q72 0 80 48 6 44-80 48-86-4-80-48 8-48 80-48z" fill="url(#h-tTongue)" stroke="none"/>
+          <path d="M500 672v62" stroke="#A8322C" stroke-opacity="0.45" stroke-width="7" stroke-linecap="round"/>
+          <ellipse cx="448" cy="688" rx="24" ry="10" fill="#FFFFFF" opacity="0.2" stroke="none" transform="rotate(-16 448 688)"/>
         </g>
       </g>
 
-      <circle cx="316" cy="258" r="15" fill="#0B0B0D" opacity="0.24" stroke="none"/>
-      <circle cx="684" cy="258" r="15" fill="#0B0B0D" opacity="0.24" stroke="none"/>
     </g>
     </g>
     </g>

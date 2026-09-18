@@ -12,12 +12,12 @@
 
 import { reduceMotion } from './utils.js';
 
-const FACE_X = 500, FACE_Y = 416;
+const FACE_X = 500, FACE_Y = 480;
 const VB_X = -40, VB_Y = -40, VB_W = 1100, VB_H = 1100;
 const REACH_X = 820, REACH_Y = 620;
 
 /* Travel inside the sclera. Vertical is smaller, as in a real eye. */
-const EYE_RX = 26, EYE_RY = 16;
+const EYE_RX = 30, EYE_RY = 20;
 const TILT_DEG = 3.4, TILT_X = 15;
 
 const EYE_TAU = 62;      /* glance settles fast  */
@@ -83,7 +83,7 @@ export function initMascotEyes() {
     for (const look of looks) look.setAttribute('transform', t);
     tilt.setAttribute(
       'transform',
-      `translate(${(leanX * TILT_X).toFixed(2)} 0) rotate(${(leanX * TILT_DEG).toFixed(2)} 500 140)`
+      `translate(${(leanX * TILT_X).toFixed(2)} 0) rotate(${(leanX * TILT_DEG).toFixed(2)} 500 240)`
     );
 
     /* Saccades mean there is always a next move, so never fully park while
@@ -129,7 +129,7 @@ export function initMascotEyes() {
   }
 
   for (const look of looks) look.setAttribute('transform', 'translate(0 0)');
-  tilt.setAttribute('transform', 'translate(0 0) rotate(0 500 140)');
+  tilt.setAttribute('transform', 'translate(0 0) rotate(0 500 240)');
 
   scheduleBlinks(svg);
 }

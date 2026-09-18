@@ -478,7 +478,7 @@
 
 /* ---- mouth --------------------------------------------------------------- */
 .t-mouth {
-  transform-origin: 500px 552px;
+  transform-origin: 500px 656px;
   transition: transform 220ms var(--ease-out);
 }
 .tolly.is-awake .t-mouth { transform: scaleY(1.12); }
@@ -562,8 +562,8 @@
 .tolly.is-blinking .t-lid { animation: blink 270ms both; }
 @keyframes blink {
   0%   { transform: translateY(var(--lid)); animation-timing-function: cubic-bezier(.5,0,.9,.5); }
-  26%  { transform: translateY(210px); animation-timing-function: linear; }
-  40%  { transform: translateY(210px); animation-timing-function: cubic-bezier(.2,.7,.4,1); }
+  26%  { transform: translateY(240px); animation-timing-function: linear; }
+  40%  { transform: translateY(240px); animation-timing-function: cubic-bezier(.2,.7,.4,1); }
   100% { transform: translateY(var(--lid)); }
 }
 
@@ -582,7 +582,7 @@
 }
 
 /* Squash on impact, stretch on the rebound, then settle. */
-.tolly.is-ringing .t-squash { animation: impact 880ms 120ms cubic-bezier(.25,1,.4,1) both; transform-origin: 500px 812px; }
+.tolly.is-ringing .t-squash { animation: impact 880ms 120ms cubic-bezier(.25,1,.4,1) both; transform-origin: 500px 860px; }
 @keyframes impact {
   0%   { transform: scale(1, 1); }
   9%   { transform: scale(1.062, .932); }
@@ -614,7 +614,7 @@
 }
 
 /* A startled blink-and-gasp, offset so it reads as a reaction to the hit. */
-.tolly.is-ringing .t-mouth { animation: gasp 560ms 150ms cubic-bezier(.2,.9,.3,1) both; transform-origin: 500px 552px; }
+.tolly.is-ringing .t-mouth { animation: gasp 560ms 150ms cubic-bezier(.2,.9,.3,1) both; transform-origin: 500px 656px; }
 @keyframes gasp {
   0% { transform: scaleY(1) scaleX(1); }
   24% { transform: scaleY(1.85) scaleX(.9); }
