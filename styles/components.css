@@ -226,3 +226,33 @@
   .policy__name { grid-column: 1 / -1; font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--fg-faint); }
   .sheet__foot { flex-wrap: wrap; }
 }
+
+/* ---- connect chooser ------------------------------------------------------
+   Shown only when there is more than one way in. Deliberately plain: the
+   wallet's own approval screen is the thing people should be reading, and a
+   chooser that tries to be a product gets in the way of that. */
+.connect {
+  position: fixed; inset: 0; z-index: 90;
+  display: grid; place-items: center;
+  padding: var(--gutter, 1rem);
+  background: rgba(11, 11, 13, .55);
+  backdrop-filter: blur(3px);
+}
+.connect__box {
+  width: min(24rem, 100%);
+  padding: 1.5rem;
+  background: var(--paper); color: var(--fg);
+  border: 3px solid var(--ink); border-radius: var(--r-md);
+  box-shadow: 0 10px 0 var(--ink);
+}
+.connect__list { display: grid; gap: .6rem; margin: 1rem 0 1.25rem; }
+.connect__opt {
+  display: block; width: 100%; text-align: left; cursor: pointer;
+  padding: .9rem 1rem;
+  background: var(--bone); color: var(--fg);
+  border: 3px solid var(--ink); border-radius: var(--r-sm);
+}
+.connect__opt:hover, .connect__opt:focus-visible { background: var(--brass); outline: none; }
+.connect__opt b { display: block; font-family: var(--font-mono); font-size: .8125rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.connect__opt span { display: block; margin-top: .25rem; font-size: .8125rem; color: var(--fg-muted); }
+.connect__cancel { width: 100%; }

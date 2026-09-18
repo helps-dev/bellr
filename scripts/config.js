@@ -116,6 +116,30 @@ export const EQUITIES = [
   { sym: 'AMD',   name: 'AMD',           venue: 'NASDAQ',    address: '0x86923f96303D656E4aa86D9d42D1e57ad2023fdC' },
 ];
 
+/**
+ * WalletConnect, so a phone can connect without a desktop extension.
+ *
+ * `projectId` comes from a free project at cloud.reown.com — WalletConnect v2
+ * refuses to start without one. Leave it empty and the interface simply does
+ * not offer the option, rather than offering a button that fails.
+ *
+ * The library is ~1.4 MB and is imported only when someone actually chooses
+ * WalletConnect. Loading it on every visit would undo the work that made this
+ * page feel quick.
+ */
+export const WALLETCONNECT = {
+  projectId: '',
+  /** What the wallet shows the user in its approval screen. */
+  metadata: {
+    name: 'BELLR',
+    description: 'Uniswap v4 hooks that read the US trading calendar.',
+    url: 'https://bellr.fun',
+    icons: ['https://bellr.fun/assets/brand/apple-touch-icon.png'],
+  },
+  /** A wallet on someone else's network needs an RPC it can actually reach. */
+  rpc: 'https://robinhood-rpc.publicnode.com',
+};
+
 /** Robinhood's own registry and quote feed. Both are public and unauthenticated. */
 export const RH_API = {
   assets: 'https://api.robinhood.com/rhj/assets',
