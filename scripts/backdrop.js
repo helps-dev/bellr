@@ -27,23 +27,36 @@ const DECAY       = 0.935;   // alpha kept per frame
 const EXPANSION   = 1.009;   // per-frame outward creep = diffusion
 const IDLE_EMIT   = 3;       // wandering emitters when the pointer is still
 
+/* Two limits that cost nothing to look at and a great deal to leave off.
+
+   MAX_DPR: this is a deliberately blurry field. Rendering it at two device
+   pixels per CSS pixel quadruples the work — on a 1374x964 window that is 5.2
+   million pixels a frame instead of 1.3 — for a difference nobody can see in a
+   soft gradient. The mascot and the type still render at full density; only
+   this canvas is capped.
+
+   MIN_FRAME_MS: the field drifts slowly by design. Thirty frames a second
+   halves the work again and looks the same. The page has a mascot loop and the
+   browser's own compositing to pay for too, and this is the cheapest thing to
+   give back. */
+const MAX_DPR      = 1;
+const MIN_FRAME_MS = 1000 / 30;
+
 export function initBackdrop() {
   const canvas = document.getElementById('backdrop');
   if (!canvas) return;
   const ctx = canvas.getContext('2d', { alpha: true });
   if (!ctx) return;
 
-  const dye = document.createElement('canvas');
-  const dctx = dye.getContext('2d', { alpha: true });
+  /* Two buffers, swapped each frame. The feedback step reads one and writes the
+     other, so nothing ever draws onto the surface it is reading — which is both
+     one drawImage cheaper than copying first and free of a self-read the spec
+     does not actually promise. */
+  let dye = document.createElement('canvas');
+  let dctx = dye.getContext('2d', { alpha: true });
 
-  // The feedback step used to draw `dye` onto its own context with
-  // globalCompositeOperation 'copy', which reads a surface that the same
-  // operation has just cleared. Browsers do handle it, but it is not a thing
-  // the spec promises, and it is the kind of detail that works until a browser
-  // version decides otherwise. Going via a scratch canvas is the same effect
-  // with nothing undefined in it.
-  const scratch = document.createElement('canvas');
-  const sctx = scratch.getContext('2d', { alpha: true });
+  let scratch = document.createElement('canvas');
+  let sctx = scratch.getContext('2d', { alpha: true });
 
   let W = 0, H = 0, dw = 0, dh = 0, dpr = 1;
   let rgb = [...TONE.closed];
@@ -56,7 +69,7 @@ export function initBackdrop() {
 
 
   function resize() {
-    dpr = Math.min(2, window.devicePixelRatio || 1);
+    dpr = Math.min(MAX_DPR, window.devicePixelRatio || 1);
     W = canvas.clientWidth;
     H = canvas.clientHeight;
     canvas.width = Math.round(W * dpr);
@@ -141,7 +154,10 @@ export function initBackdrop() {
     ctx.globalCompositeOperation = 'source-over';
     ctx.globalAlpha = 0.5;
     ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'high';
+    // The source is a quarter-resolution blur stretched over the whole window.
+    // High-quality resampling of an already-soft gradient buys nothing and is
+    // the most expensive thing this canvas does.
+    ctx.imageSmoothingQuality = 'low';
     ctx.drawImage(dye, 0, 0, W, H);
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = 'source-over';
