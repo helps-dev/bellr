@@ -145,8 +145,12 @@
 .fig:last-child { border-right: 0; }
 .fig b {
   display: block; font-family: var(--font-display);
-  font-size: clamp(2.25rem, 1.2rem + 3.6vw, 4.5rem); font-weight: 800;
+  /* Capped lower than it was: at 4.5rem a word like "uncapped" is wider than
+     its own column and collides with the figure beside it. The values here are
+     mostly short numbers, and the few that are words have to fit too. */
+  font-size: clamp(2rem, 1.1rem + 2.6vw, 3.5rem); font-weight: 800;
   line-height: .9; letter-spacing: -0.05em;
+  overflow-wrap: anywhere;
 }
 .fig span { display: block; margin-top: .6rem; }
 
@@ -214,6 +218,22 @@
 .use b { display: block; font-family: var(--font-mono); font-size: var(--fs-label); font-weight: 700; letter-spacing: var(--track-label); margin-bottom: .6rem; }
 .use h4 { font-size: 1rem; margin-bottom: .35rem; }
 .use p { font-size: .8125rem; color: var(--fg-muted); }
+
+/* A contract address is forty-two characters with nowhere to break, so without
+   this it walks straight out of its grid column and over the next one. The
+   column is minmax(0,1fr), which lets it shrink — it is the unbreakable word
+   that overflows, not the track. */
+.use__addr {
+  margin-bottom: .5rem;
+  overflow-wrap: anywhere;
+  word-break: break-all;
+}
+.use__addr code {
+  font-family: var(--font-mono);
+  font-size: .75rem;
+  color: var(--fg);
+  line-height: 1.5;
+}
 .ca-strip {
   display: flex; align-items: center; gap: .8rem; flex-wrap: wrap;
   margin: 2rem 0 1.25rem; padding: 1rem 1.25rem;

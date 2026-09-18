@@ -69,7 +69,7 @@ export function initClock() {
       const p = DEFAULT_POLICY[s.policyKey];
       el.rowRegime.textContent = REGIME_LABELS[s.policyKey];
       el.rowFee.textContent = `${p.fee.toFixed(2)}%`;
-      el.rowCap.textContent = p.cap >= 100 ? 'uncapped' : `${p.cap}% supply`;
+      el.rowCap.textContent = p.cap >= 100 ? 'None' : `${p.cap}%`;
       el.rowBand.textContent = `±${p.band.toFixed(2)}%`;
       if (el.depthRegime) el.depthRegime.textContent = s.label.toLowerCase();
       // the mascot reads the same regime the hooks would

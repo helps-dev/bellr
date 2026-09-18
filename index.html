@@ -332,7 +332,7 @@
     </div>
     <div class="figs">
       <div class="fig"><b id="rowFee">—</b><span class="label">Pool fee now</span></div>
-      <div class="fig"><b id="rowCap">—</b><span class="label">Wallet cap</span></div>
+      <div class="fig"><b id="rowCap">—</b><span class="label">Max swap</span></div>
       <div class="fig"><b id="rowBand">—</b><span class="label">Oracle band</span></div>
       <div class="fig"><b id="rowRegime">—</b><span class="label">Armed regime</span></div>
     </div>
@@ -425,17 +425,17 @@
 
     <div class="uses">
       <div class="use"><b>01</b><h4>BellrPool</h4>
-        <p><code class="mono">0x5B515cD5121efcbd1bA037be5a62d76258d220c4</code>
-        All six modules. The address ends in <b>20C4</b> because Uniswap v4 reads a hook's permissions off its own address.</p></div>
+        <p class="use__addr"><code>0x5B515cD5121efcbd1bA037be5a62d76258d220c4</code></p>
+        <p>All six modules. The address ends in <b>20C4</b> because Uniswap v4 reads a hook's permissions off its own address — it was mined, not chosen.</p></div>
       <div class="use"><b>02</b><h4>TollHook</h4>
-        <p><code class="mono">0xC741bc587588981F096a8EB8b0bf374B5d22a080</code>
-        Session pricing alone, for a pool that wants nothing else.</p></div>
+        <p class="use__addr"><code>0xC741bc587588981F096a8EB8b0bf374B5d22a080</code></p>
+        <p>Session pricing alone, for a pool that wants nothing else.</p></div>
       <div class="use"><b>03</b><h4>SessionCalendar</h4>
-        <p><code class="mono">0xd9c0421A5759b1aA2609162BD2178f147cd7E542</code>
-        New York hours resolved off-chain and published as plain UTC. Sessions through 30 June 2027.</p></div>
+        <p class="use__addr"><code>0xd9c0421A5759b1aA2609162BD2178f147cd7E542</code></p>
+        <p>New York hours resolved off-chain and published as plain UTC. Sessions through 30 June 2027.</p></div>
       <div class="use"><b>04</b><h4>BellrOracle</h4>
-        <p><code class="mono">0x55F4B8e88B7F1C50740a6909dB25E187D79015d0</code>
-        Reference prices for DRIFT. One update may move a price by at most 10%.</p></div>
+        <p class="use__addr"><code>0x55F4B8e88B7F1C50740a6909dB25E187D79015d0</code></p>
+        <p>Reference prices for DRIFT. One update may move a price by at most 10%.</p></div>
     </div>
 
     <div style="display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1.5rem">

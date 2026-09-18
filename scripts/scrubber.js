@@ -105,7 +105,7 @@ function renderReadout() {
     <dl class="spec">
       <div><dt>Armed regime</dt><dd>${REGIME_LABELS[policyKey]}</dd></div>
       <div><dt>Pool fee</dt><dd class="mono">${p.fee.toFixed(2)}%</dd></div>
-      <div><dt>Wallet cap</dt><dd class="mono">${p.cap >= 100 ? 'uncapped' : p.cap + '% supply'}</dd></div>
+      <div><dt>Max swap</dt><dd class="mono">${p.cap >= 100 ? 'no cap' : p.cap + '% of supply'}</dd></div>
       <div><dt>Oracle band</dt><dd class="mono">±${p.band.toFixed(2)}%</dd></div>
     </dl>`;
 }
